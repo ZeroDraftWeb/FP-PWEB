@@ -25,7 +25,47 @@ if (!$user) {
 $user_id = $user['id'];
 
 // Handle different actions
-if ($action === 'getProjects') {
+if ($action === 'getUserProfile') {
+    try {
+        // Get user info
+        $stmt = $pdo->prepare("SELECT username, email, membership_status, created_at FROM users WHERE id = ?");
+        $stmt->execute([$user_id]);
+        $user_info = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+        // Get project count
+        $stmt = $pdo->prepare("SELECT COUNT(*) as count FROM projects WHERE user_id = ?");
+        $stmt->execute([$user_id]);
+        $projects_count = $stmt->fetch(PDO::FETCH_ASSOC)['count'];
+        
+        // Get assets count
+        $stmt = $pdo->prepare("SELECT COUNT(*) as count FROM assets WHERE project_id IN (SELECT id FROM projects WHERE user_id = ?)");
+        $stmt->execute([$user_id]);
+        $assets_count = $stmt->fetch(PDO::FETCH_ASSOC)['count'];
+        
+        // Get characters count
+        $stmt = $pdo->prepare("SELECT COUNT(*) as count FROM characters WHERE project_id IN (SELECT id FROM projects WHERE user_id = ?)");
+        $stmt->execute([$user_id]);
+        $characters_count = $stmt->fetch(PDO::FETCH_ASSOC)['count'];
+        
+        // Get story nodes count
+        $stmt = $pdo->prepare("SELECT COUNT(*) as count FROM story_nodes WHERE project_id IN (SELECT id FROM projects WHERE user_id = ?)");
+        $stmt->execute([$user_id]);
+        $storylines_count = $stmt->fetch(PDO::FETCH_ASSOC)['count'];
+        
+        echo json_encode([
+            'success' => true,
+            'user' => $user_info,
+            'stats' => [
+                'projects' => $projects_count,
+                'assets' => $assets_count,
+                'characters' => $characters_count,
+                'storylines' => $storylines_count
+            ]
+        ]);
+    } catch (PDOException $e) {
+        echo json_encode(['success' => false, 'message' => 'Database error: ' . $e->getMessage()]);
+    }
+} elseif ($action === 'getProjects') {
     try {
         $stmt = $pdo->prepare("SELECT id, title, description, thumbnail, created_at, last_opened FROM projects WHERE user_id = ? ORDER BY last_opened DESC");
         $stmt->execute([$user_id]);

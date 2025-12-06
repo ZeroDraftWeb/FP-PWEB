@@ -25,7 +25,7 @@
                         <a class="nav-link" href="../index.html">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="edit-project.html">Projects</a>
+                        <a class="nav-link" href="../index.html#projects-section">Projects</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="membership.html">Membership</a>
@@ -54,10 +54,10 @@
                         <i class="fas fa-user"></i>
                     </div>
                     <div class="profile-info">
-                        <h2>Developer Name</h2>
-                        <p>email@example.com</p>
+                        <h2 id="profileUsername">Developer Name</h2>
+                        <p id="profileEmail">email@example.com</p>
                     </div>
-                    <span class="membership-status free">FREE MEMBERSHIP</span>
+                    <span class="membership-status" id="membershipStatus">FREE MEMBERSHIP</span>
                 </div>
 
                 <div class="row mb-4">
@@ -74,7 +74,7 @@
                                     </div>
                                     <div class="mb-3">
                                         <label for="email" class="form-label">Email</label>
-                                        <input type="email" class="form-control" id="email" value="email@example.com">
+                                        <input type="email" class="form-control" id="email" value="email@example.com" readonly>
                                     </div>
                                     <div class="mb-3">
                                         <label for="password" class="form-label">Password</label>
@@ -84,7 +84,7 @@
                                         <label for="confirmPassword" class="form-label">Confirm Password</label>
                                         <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm new password">
                                     </div>
-                                    <button type="submit" class="btn btn-primary w-100">Update Profile</button>
+                                    <button type="button" class="btn btn-primary w-100" onclick="updateProfile()">Update Profile</button>
                                 </form>
                             </div>
                         </div>
@@ -98,19 +98,19 @@
                             <div class="card-body">
                                 <div class="stats-grid">
                                     <div class="stat-card">
-                                        <div class="stat-value">5</div>
+                                        <div class="stat-value" id="statsProjects">5</div>
                                         <div class="stat-label">Active Projects</div>
                                     </div>
                                     <div class="stat-card">
-                                        <div class="stat-value">24</div>
+                                        <div class="stat-value" id="statsAssets">24</div>
                                         <div class="stat-label">Total Assets</div>
                                     </div>
                                     <div class="stat-card">
-                                        <div class="stat-value">12</div>
+                                        <div class="stat-value" id="statsCharacters">12</div>
                                         <div class="stat-label">Characters Created</div>
                                     </div>
                                     <div class="stat-card">
-                                        <div class="stat-value">3</div>
+                                        <div class="stat-value" id="statsStorylines">3</div>
                                         <div class="stat-label">Storylines</div>
                                     </div>
                                 </div>
@@ -156,5 +156,92 @@
 
     <!-- Bootstrap 5 JS Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        let userEmail = '';
+
+        // Handle navbar Projects link
+        document.querySelectorAll('a[href="../index.html#projects-section"]').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                // Navigate to index.html and let the scroll happen after page load
+                window.location.href = '../index.html#projects-section';
+            });
+        });
+
+        // Load profile data on page load
+        window.addEventListener('load', function() {
+            checkLoginStatus();
+            loadProfileData();
+        });
+
+        function checkLoginStatus() {
+            const userSession = localStorage.getItem('userSession');
+            if (!userSession) {
+                // User belum login, redirect ke login page
+                window.location.href = 'login.html';
+                return;
+            }
+            
+            try {
+                const user = JSON.parse(userSession);
+                userEmail = user.email;
+                
+                // Update email field
+                document.getElementById('email').value = userEmail;
+            } catch (e) {
+                localStorage.removeItem('userSession');
+                window.location.href = 'login.html';
+            }
+        }
+
+        async function loadProfileData() {
+            try {
+                const response = await fetch(`../php/projects.php?action=getUserProfile&email=${encodeURIComponent(userEmail)}`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    // Update user info
+                    document.getElementById('profileUsername').textContent = data.user.username;
+                    document.getElementById('profileEmail').textContent = data.user.email;
+                    document.getElementById('fullName').value = data.user.username;
+                    
+                    // Update membership status
+                    const membershipStatus = data.user.membership_status;
+                    const statusElement = document.getElementById('membershipStatus');
+                    statusElement.textContent = membershipStatus.toUpperCase() + ' MEMBERSHIP';
+                    statusElement.className = 'membership-status ' + membershipStatus;
+                    
+                    // Update statistics
+                    document.getElementById('statsProjects').textContent = data.stats.projects;
+                    document.getElementById('statsAssets').textContent = data.stats.assets;
+                    document.getElementById('statsCharacters').textContent = data.stats.characters;
+                    document.getElementById('statsStorylines').textContent = data.stats.storylines;
+                } else {
+                    console.error('Error loading profile:', data.message);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        function updateProfile() {
+            const fullName = document.getElementById('fullName').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            
+            if (password && password !== confirmPassword) {
+                alert('Passwords do not match');
+                return;
+            }
+            
+            if (!fullName) {
+                alert('Full name is required');
+                return;
+            }
+            
+            // TODO: Implement backend endpoint for updating profile
+            alert('Profile update functionality will be implemented soon');
+        }
+    </script>
 </body>
 </html>

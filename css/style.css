@@ -93,20 +93,34 @@ body {
   padding: 15px 20px;
   font-weight: bold;
   font-size: 1.1rem;
+  color: #ffffff;
+}
+
+.card-header h3 {
+  color: #ffffff;
+  margin: 0;
+  font-size: 1.5rem;
 }
 
 .form-control {
-  background-color: var(--secondary-dark);
+  background-color: #2a2a2a;
   border: 1px solid var(--border-color);
-  color: var(--text-light);
+  color: #ffffff;
   border-radius: 8px;
   padding: 10px 15px;
+  caret-color: #ffffff;
 }
 
 .form-control:focus {
   border-color: #4a4a4a;
   box-shadow: 0 0 0 3px rgba(74, 74, 74, 0.2);
-  background-color: var(--secondary-dark);
+  background-color: #2a2a2a;
+  color: #ffffff;
+  caret-color: #ffffff;
+}
+
+.form-control::placeholder {
+  color: #888888;
 }
 
 .form-label {
@@ -372,9 +386,7 @@ input[type="range"]::-moz-range-thumb {
 }
 
 .header-section {
-  background: linear-gradient(rgba(18, 18, 18, 0.8), rgba(18, 18, 18, 0.8)), url('https://placehold.co/1920x1080/1a1a1a/333333?text=Pixel+City+Background');
-  background-size: cover;
-  background-position: center;
+  background-color: #222222;
   padding: 60px 20px;
   text-align: center;
   margin-bottom: 40px;
@@ -387,6 +399,7 @@ input[type="range"]::-moz-range-thumb {
   letter-spacing: 3px;
   text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
   margin-bottom: 20px;
+  color: #ffffff;
 }
 
 .hero-subtitle {
@@ -457,6 +470,7 @@ input[type="range"]::-moz-range-thumb {
 .profile-info h2 {
   font-size: 1.5rem;
   margin-bottom: 5px;
+  color: var(--text-light);
 }
 
 .profile-info p {
@@ -470,6 +484,7 @@ input[type="range"]::-moz-range-thumb {
   font-weight: bold;
   display: inline-block;
   margin-left: 10px;
+  color: #ffffff;
 }
 
 .membership-status.free {
@@ -477,8 +492,23 @@ input[type="range"]::-moz-range-thumb {
   color: #ffffff;
 }
 
+.membership-status.basic {
+  background-color: #2ecc71;
+  color: #ffffff;
+}
+
 .membership-status.premium {
   background-color: #9b59b6;
+  color: #ffffff;
+}
+
+.membership-status.pro {
+  background-color: #9b59b6;
+  color: #ffffff;
+}
+
+.membership-status.enterprise {
+  background-color: #f39c12;
   color: #ffffff;
 }
 
@@ -515,8 +545,22 @@ input[type="range"]::-moz-range-thumb {
 }
 
 .stat-card p {
-  color: var(--text-muted);
+  color: var(--text-light);
   margin: 0;
+  font-size: 0.9rem;
+}
+
+.stat-value {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #ffffff;
+  margin-bottom: 10px;
+}
+
+.stat-label {
+  color: var(--text-light);
+  font-size: 0.95rem;
+  font-weight: 500;
 }
 
 /* Modal Styles */
