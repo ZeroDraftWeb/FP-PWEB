@@ -15,21 +15,30 @@
     <div id="navbar"></div>
     
     <div class="container-fluid py-5">
-        <!-- Header with user greeting and create button -->
+        <!-- Header with user greeting -->
         <div class="row align-items-center mb-5">
             <div class="col-md-6">
                 <h1 class="display-5">Hello, <span id="user-name">Guest</span></h1>
             </div>
-            <div class="col-md-6 text-end">
-                <button type="button" class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#createProjectModal">
-                    <i class="fas fa-plus"></i> Create New Project
-                </button>
-            </div>
         </div>
 
         <!-- Projects Section -->
-        <div class="row" id="projects-container">
-            <!-- Project cards will be loaded here dynamically -->
+        <div class="row">
+            <!-- Create New Project Card (Always First) -->
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 create-card" style="cursor: pointer; transition: transform 0.3s, box-shadow 0.3s; display: flex; align-items: center; justify-content: center; min-height: 300px; background: linear-gradient(135deg, rgba(100, 181, 246, 0.1), rgba(100, 181, 246, 0.05));">
+                    <div class="text-center">
+                        <div style="font-size: 60px; margin-bottom: 20px;">
+                            <i class="fas fa-plus" style="color: #64b5f6;"></i>
+                        </div>
+                        <h5>Create New</h5>
+                        <p class="text-muted">Make Your Own</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project Cards Container -->
+            <div id="projects-container" style="display: contents;"></div>
         </div>
     </div>
 
@@ -83,7 +92,29 @@
         document.addEventListener('DOMContentLoaded', function() {
             loadNav();
             loadDashboard();
+            setupCreateCardListener();
         });
+
+        // Setup create card click listener
+        function setupCreateCardListener() {
+            const createCard = document.querySelector('.create-card');
+            if (createCard) {
+                createCard.addEventListener('click', function() {
+                    const modal = new bootstrap.Modal(document.getElementById('createProjectModal'));
+                    modal.show();
+                });
+
+                // Add hover effect
+                createCard.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-5px)';
+                    this.style.boxShadow = '0 8px 16px rgba(100, 181, 246, 0.2)';
+                });
+                createCard.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                    this.style.boxShadow = '';
+                });
+            }
+        }
 
         // Load user name and projects
         function loadDashboard() {
@@ -91,36 +122,40 @@
             const userName = localStorage.getItem('username') || 'User';
             document.getElementById('user-name').textContent = userName;
             
-            // Load projects - initially showing sample data
+            // Load projects - initially showing sample data only if not yet stored
+            if (!localStorage.getItem('projects')) {
+                const defaultProjects = [
+                    {
+                        id: 1,
+                        name: 'Epic Fantasy Quest',
+                        description: 'A grand fantasy adventure game with magic systems and deep lore',
+                        category: 'RPG',
+                        image: 'https://via.placeholder.com/250x150/4a4a4a/cccccc?text=Project+1'
+                    },
+                    {
+                        id: 2,
+                        name: 'Space Shooter Elite',
+                        description: 'Fast-paced space shooter with multiple difficulty levels',
+                        category: 'Action',
+                        image: 'https://via.placeholder.com/250x150/3a3a3a/cccccc?text=Project+2'
+                    },
+                    {
+                        id: 3,
+                        name: 'Puzzle Master',
+                        description: 'Brain-teasing puzzle game with over 100 levels',
+                        category: 'Puzzle',
+                        image: 'https://via.placeholder.com/250x150/2a2a2a/cccccc?text=Project+3'
+                    }
+                ];
+                localStorage.setItem('projects', JSON.stringify(defaultProjects));
+            }
             loadProjects();
         }
 
         // Load and display projects
         function loadProjects() {
-            // Sample projects data - in real implementation, fetch from server
-            const projects = JSON.parse(localStorage.getItem('projects')) || [
-                {
-                    id: 1,
-                    name: 'Epic Fantasy Quest',
-                    description: 'A grand fantasy adventure game with magic systems and deep lore',
-                    category: 'RPG',
-                    image: 'https://via.placeholder.com/250x150/4a4a4a/cccccc?text=Project+1'
-                },
-                {
-                    id: 2,
-                    name: 'Space Shooter Elite',
-                    description: 'Fast-paced space shooter with multiple difficulty levels',
-                    category: 'Action',
-                    image: 'https://via.placeholder.com/250x150/3a3a3a/cccccc?text=Project+2'
-                },
-                {
-                    id: 3,
-                    name: 'Puzzle Master',
-                    description: 'Brain-teasing puzzle game with over 100 levels',
-                    category: 'Puzzle',
-                    image: 'https://via.placeholder.com/250x150/2a2a2a/cccccc?text=Project+3'
-                }
-            ];
+            // Get projects from localStorage
+            const projects = JSON.parse(localStorage.getItem('projects')) || [];
 
             const container = document.getElementById('projects-container');
             container.innerHTML = '';
@@ -149,7 +184,7 @@
                 container.innerHTML += projectCard;
             });
 
-            // Add hover effect
+            // Add hover effect to project cards
             document.querySelectorAll('.project-card').forEach(card => {
                 card.addEventListener('mouseenter', function() {
                     this.style.transform = 'translateY(-5px)';
@@ -171,11 +206,11 @@
             const projectCategory = document.getElementById('project-category').value;
 
             // Get existing projects
-            const projects = JSON.parse(localStorage.getItem('projects')) || [];
+            let projects = JSON.parse(localStorage.getItem('projects')) || [];
 
             // Add new project
             const newProject = {
-                id: projects.length + 1,
+                id: projects.length > 0 ? Math.max(...projects.map(p => p.id)) + 1 : 1,
                 name: projectName,
                 description: projectDescription,
                 category: projectCategory,
