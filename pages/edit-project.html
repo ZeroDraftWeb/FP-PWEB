@@ -3,291 +3,266 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Project - GDD Organizer</title>
-    <!-- Bootstrap 5 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Edit Project - BOLOBOX</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
-    <div id="navbar"></div>
-    
-    <div class="container mt-4">
-        <div class="row mb-4">
-            <div class="col-12">
-                <h1 class="display-5" id="project-title">Edit Project</h1>
-                <p class="lead" id="project-subtitle">Manage all aspects of your game design document</p>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="../index.html">
+                <i class="fas fa-file-alt me-2"></i>BOLOBOX
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="edit-project.html">Projects</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="membership.html">Membership</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="profile.html">Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="login.html">Logout</a>
+                    </li>
+                </ul>
             </div>
         </div>
-        
-        <div class="row mb-4">
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container-fluid">
+        <!-- Edit Project Page -->
+        <div id="edit-project-page" class="row mt-4">
             <div class="col-12">
-                <div class="d-flex justify-content-between align-items-center">
-                    <h3>Project Sections</h3>
-                    <button class="btn btn-success" id="pdf-export-btn">Export as PDF</button>
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <div>
+                        <h1 class="section-title">Cyber-Knight</h1>
+                        <p class="section-subtitle">Manage your game assets, story, and mechanics all in one place.</p>
+                    </div>
+                    <div class="action-buttons">
+                        <button class="btn btn-save">Save Project</button>
+                        <button class="btn btn-export">Export as PDF</button>
+                        <button class="btn btn-settings">Settings</button>
+                        <button class="btn btn-profile">Profile</button>
+                    </div>
                 </div>
-            </div>
-        </div>
-        
-        <div class="row">
-            <!-- Asset Gallery Section -->
-            <div class="col-lg-4 mb-4">
-                <div class="card industrial-panel h-100">
+
+                <!-- Asset Gallery Section -->
+                <div class="card mb-4">
                     <div class="card-header d-flex justify-content-between align-items-center">
-                        <h5 class="mb-0">Asset Gallery</h5>
-                        <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#uploadAssetModal">Upload</button>
+                        <h3>Asset Gallery</h3>
+                        <button class="upload-btn">
+                            <i class="fas fa-upload"></i> Upload New Asset
+                        </button>
                     </div>
                     <div class="card-body">
-                        <div class="mb-3">
-                            <label class="form-label">Filter by Category</label>
-                            <select class="form-select" id="asset-category-filter">
-                                <option value="all">All Categories</option>
-                                <option value="character">Characters</option>
-                                <option value="environment">Environment</option>
-                                <option value="ui">UI Elements</option>
-                                <option value="item">Items</option>
-                            </select>
-                        </div>
-                        <div id="asset-gallery">
-                            <!-- Assets will be loaded dynamically -->
-                            <div class="row">
-                                <div class="col-md-6 col-lg-12 mb-3">
-                                    <div class="card">
-                                        <div class="asset-placeholder" style="height: 150px;">
-                                            <div>
-                                                <div style="font-size: 24px;">🎮</div>
-                                                <div>hero-sprite.png</div>
-                                            </div>
-                                        </div>
-                                        <div class="card-body">
-                                            <h6 class="card-title">hero-sprite.png</h6>
-                                            <p class="card-text"><small class="text-muted">Character</small></p>
-                                            <button class="btn btn-sm btn-outline-primary">Use Asset</button>
-                                        </div>
-                                    </div>
+                        <div class="asset-gallery">
+                            <div class="asset-item">
+                                <img src="https://placehold.co/200x200/333333/ffffff?text=Main+Hero" alt="Main Hero">
+                                <div class="asset-info">
+                                    <div class="asset-title">Main Hero</div>
+                                    <div class="asset-filename">main_hero.png</div>
                                 </div>
-                                <div class="col-md-6 col-lg-12 mb-3">
-                                    <div class="card">
-                                        <div class="asset-placeholder" style="height: 150px;">
-                                            <div>
-                                                <div style="font-size: 24px;">👾</div>
-                                                <div>enemy-sprite.png</div>
-                                            </div>
-                                        </div>
-                                        <div class="card-body">
-                                            <h6 class="card-title">enemy-sprite.png</h6>
-                                            <p class="card-text"><small class="text-muted">Character</small></p>
-                                            <button class="btn btn-sm btn-outline-primary">Use Asset</button>
-                                        </div>
-                                    </div>
+                            </div>
+
+                            <div class="asset-item">
+                                <img src="https://placehold.co/200x200/333333/ffffff?text=Villain" alt="Villain">
+                                <div class="asset-info">
+                                    <div class="asset-title">Villain</div>
+                                    <div class="asset-filename">villain.png</div>
+                                </div>
+                            </div>
+
+                            <div class="asset-item">
+                                <img src="https://placehold.co/200x200/333333/ffffff?text=Side+Char" alt="Side Character">
+                                <div class="asset-info">
+                                    <div class="asset-title">Side Char</div>
+                                    <div class="asset-filename">side_char.png</div>
+                                </div>
+                            </div>
+
+                            <div class="asset-item">
+                                <img src="https://placehold.co/200x200/333333/ffffff?text=Statue" alt="Statue">
+                                <div class="asset-info">
+                                    <div class="asset-title">Statue</div>
+                                    <div class="asset-filename">statue.png</div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            
-            <!-- Character Stat Builder Section -->
-            <div class="col-lg-4 mb-4">
-                <div class="card industrial-panel h-100">
+
+                <!-- Character Stat Builder Section -->
+                <div class="card mb-4">
                     <div class="card-header">
-                        <h5 class="mb-0">Character Stat Builder</h5>
+                        <h3>Character Stat Builder</h3>
+                    </div>
+                    <div class="card-body character-builder">
+                        <div class="character-form">
+                            <div class="character-info">
+                                <div class="mb-3">
+                                    <label for="characterName" class="form-label">Character Name</label>
+                                    <input type="text" class="form-control" id="characterName" value="Cyber-Knight">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="selectImage" class="form-label">Select Image</label>
+                                    <select class="form-select" id="selectImage">
+                                        <option value="main_hero.png">main_hero.png</option>
+                                        <option value="villain.png">villain.png</option>
+                                        <option value="side_char.png">side_char.png</option>
+                                        <option value="statue.png">statue.png</option>
+                                    </select>
+                                </div>
+                                <button class="save-character-btn">
+                                    <i class="fas fa-save"></i> Save Character
+                                </button>
+                            </div>
+
+                            <div class="character-stats">
+                                <div class="slider-container">
+                                    <label>HP: <span id="hpValue">120</span></label>
+                                    <input type="range" class="form-range" id="hpSlider" min="1" max="200" value="120">
+                                </div>
+
+                                <div class="slider-container">
+                                    <label>Attack: <span id="attackValue">45</span></label>
+                                    <input type="range" class="form-range" id="attackSlider" min="1" max="100" value="45">
+                                </div>
+
+                                <div class="slider-container">
+                                    <label>Speed: <span id="speedValue">80</span></label>
+                                    <input type="range" class="form-range" id="speedSlider" min="1" max="100" value="80">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Interactive Storyline Section -->
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h3>Interactive Storyline</h3>
+                        <p class="mb-0">Make your own storyline here</p>
                     </div>
                     <div class="card-body">
-                        <div class="mb-3">
-                            <label class="form-label">Character Name</label>
-                            <input type="text" class="form-control" id="character-name" value="Hero">
-                        </div>
-                        
-                        <div class="stat-slider-container">
-                            <div class="stat-display">
-                                <span>HP: <span id="hp-value">100</span></span>
-                                <span class="text-muted">1-200</span>
+                        <div class="story-editor">
+                            <div class="story-toolbar">
+                                <button><i class="fas fa-plus"></i> Add Node</button>
+                                <button><i class="fas fa-link"></i> Connect Nodes</button>
+                                <button><i class="fas fa-search-plus"></i> Zoom In</button>
+                                <button><i class="fas fa-search-minus"></i> Zoom Out</button>
                             </div>
-                            <input type="range" class="form-range stat-slider" min="1" max="200" value="100" id="hp-slider">
-                        </div>
-                        
-                        <div class="stat-slider-container">
-                            <div class="stat-display">
-                                <span>Attack: <span id="attack-value">50</span></span>
-                                <span class="text-muted">1-100</span>
-                            </div>
-                            <input type="range" class="form-range stat-slider" min="1" max="100" value="50" id="attack-slider">
-                        </div>
-                        
-                        <div class="stat-slider-container">
-                            <div class="stat-display">
-                                <span>Speed: <span id="speed-value">75</span></span>
-                                <span class="text-muted">1-150</span>
-                            </div>
-                            <input type="range" class="form-range stat-slider" min="1" max="150" value="75" id="speed-slider">
-                        </div>
-                        
-                        <div class="mt-3">
-                            <div class="d-flex justify-content-between">
-                                <span>Total:</span>
-                                <strong><span id="stat-total">225</span></strong>
-                            </div>
-                        </div>
-                        
-                        <div class="mt-3">
-                            <button class="btn btn-primary w-100">Save Character</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Interactive Storyline Section -->
-            <div class="col-lg-4 mb-4">
-                <div class="card industrial-panel h-100">
-                    <div class="card-header">
-                        <h5 class="mb-0">Interactive Storyline</h5>
-                    </div>
-                    <div class="card-body">
-                        <div class="mb-3">
-                            <label class="form-label">Node Title</label>
-                            <input type="text" class="form-control" id="node-title" placeholder="Enter node title">
-                        </div>
-                        
-                        <div class="mb-3">
-                            <label class="form-label">Content</label>
-                            <textarea class="form-control" id="node-content" rows="3" placeholder="Enter node content"></textarea>
-                        </div>
-                        
-                        <div class="d-grid gap-2">
-                            <button class="btn btn-primary" id="node-create-btn">Create Node</button>
-                            <button class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#storyEditorModal">Open Story Editor</button>
-                        </div>
-                        
-                        <div class="mt-3">
-                            <h6>Recent Nodes</h6>
-                            <ul class="list-group">
-                                <li class="list-group-item">Start - Player spawns in village</li>
-                                <li class="list-group-item">Choice 1 - Go to forest or dungeon?</li>
-                                <li class="list-group-item">Forest Path - Encounter with bandits</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Upload Asset Modal -->
-    <div class="modal fade" id="uploadAssetModal" tabindex="-1" aria-labelledby="uploadAssetModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="uploadAssetModalLabel">Upload Asset</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="upload-asset-form">
-                        <div class="mb-3">
-                            <label for="asset-file" class="form-label">Select File</label>
-                            <input type="file" class="form-control" id="asset-upload" name="file" accept="image/*" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="asset-category" class="form-label">Category</label>
-                            <select class="form-select" id="asset-category" name="category">
-                                <option value="character">Character</option>
-                                <option value="environment">Environment</option>
-                                <option value="ui">UI Element</option>
-                                <option value="item">Item</option>
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label for="asset-description" class="form-label">Description (Optional)</label>
-                            <textarea class="form-control" id="asset-description" name="description" rows="2"></textarea>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary" onclick="document.getElementById('asset-upload').click()">Upload</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Story Editor Modal -->
-    <div class="modal fade" id="storyEditorModal" tabindex="-1" aria-labelledby="storyEditorModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-xl">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="storyEditorModalLabel">Story Editor</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div id="story-editor" class="node-editor">
-                        <!-- This would contain the actual node-based editor in a real implementation -->
-                        <div class="d-flex justify-content-center align-items-center h-100">
-                            <div class="text-center">
-                                <p>Node-based story editor would be displayed here</p>
-                                <p>Visual canvas for creating branching narratives</p>
+                            <div class="story-canvas">
+                                <!-- Story nodes will be dynamically created here -->
+                                <div class="story-node start" style="top: 200px; left: 100px;">
+                                    <strong>Start</strong>
+                                </div>
+
+                                <div class="story-node" style="top: 100px; left: 300px;">
+                                    <strong>Fight Goblin</strong>
+                                    <div style="font-size: 0.8rem;">Engage in combat.</div>
+                                </div>
+
+                                <div class="story-node" style="top: 300px; left: 300px;">
+                                    <strong>Sneak Past</strong>
+                                    <div style="font-size: 0.8rem;">Avoid confrontation.</div>
+                                </div>
+
+                                <!-- Connections between nodes -->
+                                <svg width="100%" height="100%" style="position: absolute; top: 0; left: 0; pointer-events: none;">
+                                    <line class="story-connection" x1="150" y1="200" x2="300" y2="100" />
+                                    <line class="story-connection" x1="150" y1="200" x2="300" y2="300" />
+                                </svg>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- Bootstrap 5 JS Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Main JavaScript -->
-    <script src="../js/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Initialize edit project page
-        document.addEventListener('DOMContentLoaded', function() {
-            loadNav();
-            loadProjectDetails();
+        // Set up slider value updates
+        const hpSlider = document.getElementById('hpSlider');
+        const attackSlider = document.getElementById('attackSlider');
+        const speedSlider = document.getElementById('speedSlider');
+
+        const hpValue = document.getElementById('hpValue');
+        const attackValue = document.getElementById('attackValue');
+        const speedValue = document.getElementById('speedValue');
+
+        hpSlider.addEventListener('input', function() {
+            hpValue.textContent = this.value;
         });
 
-        // Load selected project details based on query param id
-        function loadProjectDetails() {
-            const params = new URLSearchParams(window.location.search);
-            const projectId = parseInt(params.get('id'), 10);
+        attackSlider.addEventListener('input', function() {
+            attackValue.textContent = this.value;
+        });
 
-            const projects = JSON.parse(localStorage.getItem('projects')) || [];
-            let project = undefined;
+        speedSlider.addEventListener('input', function() {
+            speedValue.textContent = this.value;
+        });
 
-            if (!Number.isNaN(projectId)) {
-                project = projects.find(p => p.id === projectId);
+        // Upload asset button
+        document.querySelector('.upload-btn').addEventListener('click', function() {
+            alert('Upload functionality would open file selector here.');
+        });
+
+        // Save character button
+        document.querySelector('.save-character-btn').addEventListener('click', function() {
+            alert('Character saved successfully!');
+        });
+
+        // Story node drag functionality (basic implementation)
+        let isDragging = false;
+        let currentDragNode = null;
+        let offsetX = 0;
+        let offsetY = 0;
+
+        document.querySelectorAll('.story-node').forEach(node => {
+            node.addEventListener('mousedown', function(e) {
+                isDragging = true;
+                currentDragNode = this;
+                offsetX = e.clientX - this.offsetLeft;
+                offsetY = e.clientY - this.offsetTop;
+                this.style.zIndex = '10';
+            });
+        });
+
+        document.addEventListener('mousemove', function(e) {
+            if (isDragging && currentDragNode) {
+                currentDragNode.style.left = (e.clientX - offsetX) + 'px';
+                currentDragNode.style.top = (e.clientY - offsetY) + 'px';
             }
+        });
 
-            // Fallback to first project if id missing or not found
-            if (!project && projects.length > 0) {
-                project = projects[0];
+        document.addEventListener('mouseup', function() {
+            if (isDragging) {
+                isDragging = false;
+                if (currentDragNode) {
+                    currentDragNode.style.zIndex = '1';
+                    currentDragNode = null;
+                }
             }
+        });
 
-            if (!project) {
-                alert('Project not found. Please create a project first.');
-                window.location.href = 'dashboard.html';
-                return;
-            }
-
-            // Update headings
-            const titleEl = document.getElementById('project-title');
-            const subtitleEl = document.getElementById('project-subtitle');
-            if (titleEl) titleEl.textContent = `Edit Project: ${project.name}`;
-            if (subtitleEl) subtitleEl.textContent = project.description || 'Manage all aspects of your game design document';
-
-            // Prefill character name to project name if empty
-            const charName = document.getElementById('character-name');
-            if (charName && (!charName.value || charName.value === 'Hero')) {
-                charName.value = project.name;
-            }
-
-            // Set storyline placeholders to include project name
-            const nodeTitle = document.getElementById('node-title');
-            const nodeContent = document.getElementById('node-content');
-            if (nodeTitle) nodeTitle.placeholder = `Enter node title for ${project.name}`;
-            if (nodeContent) nodeContent.placeholder = `Enter node content for ${project.name}`;
-        }
+        document.querySelector('.story-toolbar button:first-child').addEventListener('click', function() {
+            alert('Add node functionality would create a new node at the clicked position.');
+        });
     </script>
 </body>
 </html>

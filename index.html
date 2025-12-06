@@ -3,31 +3,133 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GDD Organizer - Game Design Document Hub</title>
-    <!-- Bootstrap 5 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>BOLOBOX - Game Design Document Hub</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <div id="navbar"></div>
-    
-    <div class="container mt-4">
-        <div class="row min-vh-75 align-items-center">
-            <div class="col-12 text-center">
-                <h1 class="display-3">GDD Organizer</h1>
-                <p class="lead">Your centralized platform for managing game design documents</p>
-                <div class="mt-4">
-                    <a href="pages/login.html" class="btn btn-primary btn-lg me-2">Login</a>
-                    <a href="pages/signup.html" class="btn btn-outline-primary btn-lg">Sign Up</a>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <i class="fas fa-file-alt me-2"></i>BOLOBOX
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="pages/edit-project.html">Projects</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="pages/membership.html">Membership</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="pages/profile.html">Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="pages/login.html">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container-fluid">
+        <!-- Home Page -->
+        <div id="home-page" class="row mt-4">
+            <div class="col-12">
+                <div class="header-section">
+                    <h1 class="hero-title">BOLOBOX</h1>
+                    <p class="hero-subtitle">Manage your game assets, story, and mechanics all in one place</p>
+                    <a href="pages/edit-project.html" class="btn btn-primary">Create New Project</a>
+                </div>
+
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <h2 class="section-title">Hello, Developer</h2>
+                        <p class="section-subtitle">Your recently opened projects</p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-3 col-sm-6 mb-4">
+                        <div class="project-card">
+                            <div class="project-icon">
+                                <i class="fas fa-gamepad"></i>
+                            </div>
+                            <h3 class="project-title">Cyber Knight</h3>
+                            <p class="project-desc">Action RPG with pixel art style and branching narrative</p>
+                            <div class="project-meta">
+                                <span>Updated: 2 days ago</span>
+                                <span>Assets: 24</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 col-sm-6 mb-4">
+                        <div class="project-card">
+                            <div class="project-icon">
+                                <i class="fas fa-dragon"></i>
+                            </div>
+                            <h3 class="project-title">Dragon's Lair</h3>
+                            <p class="project-desc">Fantasy adventure with turn-based combat system</p>
+                            <div class="project-meta">
+                                <span>Updated: 1 week ago</span>
+                                <span>Assets: 18</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 col-sm-6 mb-4">
+                        <div class="project-card">
+                            <div class="project-icon">
+                                <i class="fas fa-space-shuttle"></i>
+                            </div>
+                            <h3 class="project-title">Star Explorer</h3>
+                            <p class="project-desc">Space exploration game with resource management</p>
+                            <div class="project-meta">
+                                <span>Updated: 3 weeks ago</span>
+                                <span>Assets: 32</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 col-sm-6 mb-4">
+                        <div class="create-new-project">
+                            <i class="fas fa-plus"></i>
+                            <div class="create-new-project-text">Create New Project</div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- Bootstrap 5 JS Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Main JavaScript -->
-    <script src="js/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Create project card functionality
+        document.querySelectorAll('.create-new-project').forEach(card => {
+            card.addEventListener('click', function() {
+                alert('Creating new project...');
+                // In a real application, this would navigate to a project creation form
+            });
+        });
+
+        // Project card click functionality
+        document.querySelectorAll('.project-card').forEach(card => {
+            card.addEventListener('click', function() {
+                window.location.href = 'pages/edit-project.html';
+            });
+        });
+    </script>
 </body>
 </html>
