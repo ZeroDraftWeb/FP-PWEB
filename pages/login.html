@@ -59,9 +59,12 @@
             // In a real implementation, this would send data to the server
             console.log('Login attempt:', { username, password });
             
-            // For demo purposes, just redirect to home page
+            // Save username to localStorage for dashboard
+            localStorage.setItem('username', username);
+            
+            // For demo purposes, just redirect to dashboard page
             alert('Login successful! Redirecting to dashboard...');
-            window.location.href = '../index.html';
+            window.location.href = 'dashboard.html';
         });
     </script>
 </body>
