@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Membership - GDD Organizer</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <div id="navbar"></div>
+    
+    <div class="container mt-4">
+        <div class="row mb-4">
+            <div class="col-12">
+                <h1 class="display-5">Membership Plans</h1>
+                <p class="lead">Choose the plan that best fits your game development needs</p>
+            </div>
+        </div>
+        
+        <div class="row mb-4">
+            <div class="col-md-4 mb-4">
+                <div class="card industrial-panel h-100">
+                    <div class="card-header text-center">
+                        <h4>Basic</h4>
+                    </div>
+                    <div class="card-body text-center">
+                        <h2 class="display-4">Rp 0<span class="fs-6">/mo</span></h2>
+                        <ul class="list-unstyled mt-3 mb-4">
+                            <li>✓ 3 Projects</li>
+                            <li>✓ 50 Assets Storage</li>
+                            <li>✓ Basic Character Stats</li>
+                            <li>✓ Simple Storylines</li>
+                            <li>✗ No PDF Export</li>
+                            <li>✗ No Priority Support</li>
+                        </ul>
+                        <button class="btn btn-outline-light w-100" disabled>Current Plan</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4 mb-4">
+                <div class="card industrial-panel h-100 border-primary">
+                    <div class="card-header text-center bg-primary text-white">
+                        <h4>Pro</h4>
+                    </div>
+                    <div class="card-body text-center">
+                        <h2 class="display-4">Rp 50,000<span class="fs-6">/mo</span></h2>
+                        <ul class="list-unstyled mt-3 mb-4">
+                            <li>✓ Unlimited Projects</li>
+                            <li>✓ 500 Assets Storage</li>
+                            <li>✓ Advanced Character Stats</li>
+                            <li>✓ Complex Storylines</li>
+                            <li>✓ PDF Export</li>
+                            <li>✓ Email Support</li>
+                        </ul>
+                        <button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#paymentModal">Upgrade Now</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4 mb-4">
+                <div class="card industrial-panel h-100">
+                    <div class="card-header text-center">
+                        <h4>Enterprise</h4>
+                    </div>
+                    <div class="card-body text-center">
+                        <h2 class="display-4">Rp 150,000<span class="fs-6">/mo</span></h2>
+                        <ul class="list-unstyled mt-3 mb-4">
+                            <li>✓ Unlimited Projects</li>
+                            <li>✓ 2GB Assets Storage</li>
+                            <li>✓ Advanced Character Stats</li>
+                            <li>✓ Complex Storylines</li>
+                            <li>✓ PDF Export</li>
+                            <li>✓ Priority Support</li>
+                            <li>✓ Team Collaboration</li>
+                            <li>✓ API Access</li>
+                        </ul>
+                        <button class="btn btn-outline-light w-100" data-bs-toggle="modal" data-bs-target="#paymentModal">Choose Plan</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-12">
+                <div class="card industrial-panel">
+                    <div class="card-header">
+                        <h5>Payment Information</h5>
+                    </div>
+                    <div class="card-body">
+                        <p>GDD Organizer accepts payments through QRIS BCA for your convenience. After payment, your membership will be automatically upgraded.</p>
+                        <p class="mb-0"><strong>Current Subscription:</strong> Basic Plan (Free)</p>
+                        <p><strong>Next Billing Date:</strong> N/A</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Payment Modal -->
+    <div class="modal fade" id="paymentModal" tabindex="-1" aria-labelledby="paymentModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="paymentModalLabel">QRIS BCA Payment</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <div class="mb-3">
+                        <h5>Scan QR Code to Pay</h5>
+                        <div class="d-flex justify-content-center">
+                            <div class="qr-placeholder bg-light p-3 rounded" style="width: 200px; height: 200px; display: flex; align-items: center; justify-content: center;">
+                                <!-- In a real implementation, this would be an actual QR code -->
+                                <div class="text-center">
+                                    <div class="mb-2">[QR Code Placeholder]</div>
+                                    <small>QRIS BCA</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <p><strong>Amount:</strong> <span id="payment-amount">Rp 50,000</span></p>
+                        <p><strong>Plan:</strong> <span id="payment-plan">Pro Monthly</span></p>
+                    </div>
+                    
+                    <div class="alert alert-info">
+                        <p class="mb-0"><small>After scanning and completing the payment, please click the "Verify Payment" button below. It may take a few minutes for the payment to process.</small></p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-success" onclick="verifyPayment()">Verify Payment</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap 5 JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Main JavaScript -->
+    <script src="../js/main.js"></script>
+    <script>
+        // Handle payment modal showing to update the plan details
+        document.getElementById('paymentModal').addEventListener('show.bs.modal', function(event) {
+            const button = event.relatedTarget;
+            const card = button.closest('.card');
+            const plan = card.querySelector('.card-header h4').textContent;
+            const amount = plan === 'Pro' ? 'Rp 50,000' : 'Rp 150,000';
+            
+            document.getElementById('payment-plan').textContent = plan + ' Monthly';
+            document.getElementById('payment-amount').textContent = amount;
+        });
+        
+        function verifyPayment() {
+            // In a real implementation, this would check payment status with the server
+            alert('Payment verification initiated! (Mock implementation)\n\nIn a real application, this would connect to the QRIS BCA API to verify the payment.');
+            
+            // Simulate payment verification
+            setTimeout(function() {
+                alert('Payment verified! Your membership has been upgraded.');
+                const modal = bootstrap.Modal.getInstance(document.getElementById('paymentModal'));
+                modal.hide();
+            }, 1500);
+        }
+    </script>
+</body>
+</html>
