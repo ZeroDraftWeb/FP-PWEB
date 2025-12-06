@@ -55,25 +55,26 @@
                     <div class="col-md-6">
                         <div class="login-form">
                             <h2 class="login-title">Sign Up</h2>
-                            <form>
+                            <div id="alert-container"></div>
+                            <form id="signupForm">
                                 <div class="mb-3">
-                                    <label for="fullName" class="form-label">Full Name</label>
-                                    <input type="text" class="form-control" id="fullName" placeholder="Enter your full name">
+                                    <label for="fullName" class="form-label">Username</label>
+                                    <input type="text" class="form-control" id="fullName" name="fullName" placeholder="Enter your username" required>
                                 </div>
                                 <div class="mb-3">
                                     <label for="signupEmail" class="form-label">Email address</label>
-                                    <input type="email" class="form-control" id="signupEmail" placeholder="Enter email">
+                                    <input type="email" class="form-control" id="signupEmail" name="signupEmail" placeholder="Enter email" required>
                                 </div>
                                 <div class="mb-3">
                                     <label for="signupPassword" class="form-label">Password</label>
-                                    <input type="password" class="form-control" id="signupPassword" placeholder="Password">
+                                    <input type="password" class="form-control" id="signupPassword" name="signupPassword" placeholder="Password" required>
                                 </div>
                                 <div class="mb-3">
                                     <label for="confirmPassword" class="form-label">Confirm Password</label>
-                                    <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm password">
+                                    <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="Confirm password" required>
                                 </div>
                                 <div class="mb-3 form-check">
-                                    <input type="checkbox" class="form-check-input" id="acceptTerms">
+                                    <input type="checkbox" class="form-check-input" id="acceptTerms" required>
                                     <label class="form-check-label" for="acceptTerms">I agree to the Terms and Conditions</label>
                                 </div>
                                 <button type="submit" class="btn btn-primary w-100">Sign Up</button>
@@ -90,5 +91,93 @@
 
     <!-- Bootstrap 5 JS Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        document.getElementById('signupForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const alertContainer = document.getElementById('alert-container');
+            alertContainer.innerHTML = '';
+            
+            const username = document.getElementById('fullName').value.trim();
+            const email = document.getElementById('signupEmail').value.trim();
+            const password = document.getElementById('signupPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const acceptTerms = document.getElementById('acceptTerms').checked;
+            
+            // Validation
+            if (!username || !email || !password || !confirmPassword) {
+                showAlert('Please fill in all fields', 'danger');
+                return;
+            }
+            
+            if (password !== confirmPassword) {
+                showAlert('Passwords do not match', 'danger');
+                return;
+            }
+            
+            if (password.length < 6) {
+                showAlert('Password must be at least 6 characters long', 'danger');
+                return;
+            }
+            
+            if (!acceptTerms) {
+                showAlert('You must accept the Terms and Conditions', 'danger');
+                return;
+            }
+            
+            // Send registration request
+            try {
+                const formData = new FormData();
+                formData.append('action', 'register');
+                formData.append('username', username);
+                formData.append('email', email);
+                formData.append('password', password);
+                
+                const response = await fetch('../php/auth.php', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                // Check if response is ok
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const contentType = response.headers.get("content-type");
+                if (!contentType || !contentType.includes("application/json")) {
+                    const text = await response.text();
+                    console.error('Non-JSON response:', text);
+                    throw new Error("Server did not return JSON response");
+                }
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    showAlert('Registration successful! Redirecting to login...', 'success');
+                    setTimeout(() => {
+                        window.location.href = 'login.html';
+                    }, 2000);
+                } else {
+                    showAlert(data.message || 'Registration failed. Please try again.', 'danger');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                showAlert('An error occurred: ' + error.message + '. Make sure XAMPP is running and database is set up.', 'danger');
+            }
+        });
+        
+        function showAlert(message, type) {
+            const alertContainer = document.getElementById('alert-container');
+            const alert = document.createElement('div');
+            alert.className = `alert alert-${type} alert-dismissible fade show`;
+            alert.role = 'alert';
+            alert.innerHTML = `
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            `;
+            alertContainer.appendChild(alert);
+        }
+    </script>
 </body>
 </html>
