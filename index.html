@@ -25,7 +25,7 @@
                         <a class="nav-link active" href="index.html">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="pages/edit-project.html">Projects</a>
+                        <a class="nav-link" href="#projects-section">Projects</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="pages/membership.html">Membership</a>
@@ -49,10 +49,10 @@
                 <div class="header-section">
                     <h1 class="hero-title">BOLOBOX</h1>
                     <p class="hero-subtitle">Manage your game assets, story, and mechanics all in one place</p>
-                    <a href="pages/edit-project.html" class="btn btn-primary">Create New Project</a>
+                    <button class="btn btn-primary" id="headerCreateProjectBtn">Create New Project</button>
                 </div>
 
-                <div class="row mb-4">
+                <div class="row mb-4" id="projects-section">
                     <div class="col-12">
                         <h2 class="section-title" id="welcomeTitle">Hello, Developer</h2>
                         <p class="section-subtitle">Your recently opened projects</p>
@@ -132,17 +132,10 @@
                             <textarea class="form-control" id="projectDescription" rows="3" required placeholder="Describe your game project" style="background-color: #ffffff !important; color: #000000 !important; border: 2px solid #dee2e6 !important; caret-color: #000000 !important;"></textarea>
                         </div>
                         <div class="mb-3">
-                            <label for="projectIcon" class="form-label">Choose Icon</label>
-                            <select class="form-select" id="projectIcon" required style="background-color: #ffffff !important; color: #000000 !important; border: 2px solid #dee2e6 !important;">
-                                <option style="background-color: #ffffff !important; color: #000000 !important;">Gamepad</option>
-                                <option style="background-color: #ffffff !important; color: #000000 !important;">Dragon</option>
-                                <option style="background-color: #ffffff !important; color: #000000 !important;">Space Shuttle</option>
-                                <option style="background-color: #ffffff !important; color: #000000 !important;">Ghost</option>
-                                <option style="background-color: #ffffff !important; color: #000000 !important;">Chess</option>
-                                <option style="background-color: #ffffff !important; color: #000000 !important;">Dice</option>
-                                <option style="background-color: #ffffff !important; color: #000000 !important;">Heart</option>
-                                <option style="background-color: #ffffff !important; color: #000000 !important;">Star</option>
-                            </select>
+                            <label for="projectThumbnail" class="form-label">Project Thumbnail (Optional)</label>
+                            <input type="file" class="form-control" id="projectThumbnail" accept="image/*" style="background-color: #ffffff !important; color: #000000 !important; border: 2px solid #dee2e6 !important;">
+                            <small class="text-muted d-block mt-2">Supported formats: JPEG, PNG, GIF, WebP. Max size: 5MB. If no image is provided, a gamepad icon will be used.</small>
+                            <div id="thumbnailPreview" class="mt-2"></div>
                         </div>
                     </form>
                 </div>
@@ -154,11 +147,93 @@
         </div>
     </div>
 
+    <!-- Modal for Renaming Project -->
+    <div class="modal fade" id="renameProjectModal" tabindex="-1" aria-labelledby="renameProjectModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="renameProjectModalLabel">Edit Project</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="renameProjectForm">
+                        <div class="mb-3">
+                            <label for="editProjectTitle" class="form-label">Project Title</label>
+                            <input type="text" class="form-control" id="editProjectTitle" required style="background-color: #ffffff !important; color: #000000 !important; border: 2px solid #dee2e6 !important; caret-color: #000000 !important;">
+                        </div>
+                        <div class="mb-3">
+                            <label for="editProjectDescription" class="form-label">Description</label>
+                            <textarea class="form-control" id="editProjectDescription" rows="3" required style="background-color: #ffffff !important; color: #000000 !important; border: 2px solid #dee2e6 !important; caret-color: #000000 !important;"></textarea>
+                        </div>
+                        <input type="hidden" id="editingProjectId">
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="saveRenameBtn">Save Changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Changing Thumbnail -->
+    <div class="modal fade" id="thumbnailModalEdit" tabindex="-1" aria-labelledby="thumbnailModalEditLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="thumbnailModalEditLabel">Change Project Thumbnail</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="changeThumbnailForm">
+                        <div class="mb-3">
+                            <label for="projectThumbnailEdit" class="form-label">Project Thumbnail</label>
+                            <input type="file" class="form-control" id="projectThumbnailEdit" accept="image/*" style="background-color: #ffffff !important; color: #000000 !important; border: 2px solid #dee2e6 !important;">
+                            <small class="text-muted d-block mt-2">Supported formats: JPEG, PNG, GIF, WebP. Max size: 5MB.</small>
+                            <div id="thumbnailPreviewEdit" class="mt-2"></div>
+                        </div>
+                        <input type="hidden" id="editingThumbnailProjectId">
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="saveThumbnailBtn">Upload Thumbnail</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Bootstrap 5 JS Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         let userEmail = '';
         let username = '';
+        
+        // Initialize modal instances
+        const renameProjectModal = new bootstrap.Modal(document.getElementById('renameProjectModal'));
+        const thumbnailModalEdit = new bootstrap.Modal(document.getElementById('thumbnailModalEdit'));
+        
+        // Handle navbar Projects link
+        document.querySelectorAll('a[href="#projects-section"]').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const projectsSection = document.getElementById('projects-section');
+                if (projectsSection) {
+                    projectsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+        
+        // Handle header Create New Project button
+        let headerCreateProjectBtn = null;
+        document.addEventListener('DOMContentLoaded', function() {
+            headerCreateProjectBtn = document.getElementById('headerCreateProjectBtn');
+            if (headerCreateProjectBtn) {
+                headerCreateProjectBtn.addEventListener('click', function() {
+                    createNewProjectAndNavigate();
+                });
+            }
+        });
         
         // Check if user is logged in
         window.addEventListener('load', function() {
@@ -235,16 +310,28 @@
                     day: 'numeric'
                 });
                 
+                // Determine what to display in the project icon
+                let iconHtml = '';
+                if (project.thumbnail) {
+                    iconHtml = `<img src="${escapeHtml(project.thumbnail)}" alt="${escapeHtml(project.title)}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">`;
+                } else {
+                    iconHtml = '<i class="fas fa-gamepad"></i>';
+                }
+                
                 projectCard.innerHTML = `
-                    <div class="project-card" data-project-id="${project.id}">
+                    <div class="project-card" data-project-id="${project.id}" style="position: relative;">
                         <div class="project-icon">
-                            <i class="fas fa-gamepad"></i>
+                            ${iconHtml}
+                        </div>
+                        <div class="project-actions" style="position: absolute; top: 10px; right: 10px; display: flex; gap: 8px;">
+                            <button class="btn btn-sm btn-light" title="Rename" onclick="showRenameModal(${project.id}, '${escapeHtml(project.title).replace(/'/g, "\\'")}', '${escapeHtml(project.description).replace(/'/g, "\\'")}')"><i class="fas fa-edit"></i></button>
+                            <button class="btn btn-sm btn-light" title="Change Thumbnail" onclick="showThumbnailModal(${project.id})"><i class="fas fa-image"></i></button>
+                            <button class="btn btn-sm btn-light" title="Delete" onclick="deleteProject(${project.id})" style="color: #dc3545;"><i class="fas fa-trash-alt"></i></button>
                         </div>
                         <h3 class="project-title">${escapeHtml(project.title)}</h3>
                         <p class="project-desc">${escapeHtml(project.description)}</p>
                         <div class="project-meta">
                             <span>Created: ${createdDate}</span>
-                            <span><i class="fas fa-trash-alt" style="cursor: pointer; color: #dc3545;" onclick="deleteProject(${project.id})"></i></span>
                         </div>
                     </div>
                 `;
@@ -252,7 +339,7 @@
                 
                 // Add click handler to edit project
                 projectCard.querySelector('.project-card').addEventListener('click', function(e) {
-                    if (!e.target.classList.contains('fa-trash-alt')) {
+                    if (!e.target.closest('.project-actions')) {
                         window.location.href = 'pages/edit-project.html?id=' + project.id;
                     }
                 });
@@ -289,6 +376,156 @@
         // Create project modal instance
         const createProjectModal = new bootstrap.Modal(document.getElementById('createProjectModal'));
 
+        // Handle thumbnail preview
+        document.getElementById('projectThumbnail').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            const previewContainer = document.getElementById('thumbnailPreview');
+            previewContainer.innerHTML = '';
+            
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    previewContainer.innerHTML = `
+                        <div style="position: relative; width: 100%; max-width: 200px;">
+                            <img src="${event.target.result}" alt="Preview" style="width: 100%; height: 150px; object-fit: cover; border-radius: 8px; border: 2px solid #dee2e6;">
+                            <small class="text-muted d-block mt-1">${file.name}</small>
+                        </div>
+                    `;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Handle thumbnail preview for edit modal
+        document.getElementById('projectThumbnailEdit').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            const previewContainer = document.getElementById('thumbnailPreviewEdit');
+            previewContainer.innerHTML = '';
+            
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    previewContainer.innerHTML = `
+                        <div style="position: relative; width: 100%; max-width: 200px;">
+                            <img src="${event.target.result}" alt="Preview" style="width: 100%; height: 150px; object-fit: cover; border-radius: 8px; border: 2px solid #dee2e6;">
+                            <small class="text-muted d-block mt-1">${file.name}</small>
+                        </div>
+                    `;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Handle modal close events
+        document.getElementById('createProjectModal').addEventListener('hidden.bs.modal', function() {
+            // Remove all backdrops
+            document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
+            // Enable body scrolling
+            document.body.style.overflow = 'auto';
+            document.body.classList.remove('modal-open');
+        });
+
+        document.getElementById('renameProjectModal').addEventListener('hidden.bs.modal', function() {
+            document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
+            document.body.style.overflow = 'auto';
+            document.body.classList.remove('modal-open');
+        });
+
+        document.getElementById('thumbnailModalEdit').addEventListener('hidden.bs.modal', function() {
+            document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
+            document.body.style.overflow = 'auto';
+            document.body.classList.remove('modal-open');
+        });
+
+        // Show rename modal
+        function showRenameModal(projectId, title, description) {
+            document.getElementById('editingProjectId').value = projectId;
+            document.getElementById('editProjectTitle').value = title;
+            document.getElementById('editProjectDescription').value = description;
+            renameProjectModal.show();
+        }
+
+        // Save rename
+        document.getElementById('saveRenameBtn').addEventListener('click', async function() {
+            const form = document.getElementById('renameProjectForm');
+            
+            if (form.checkValidity()) {
+                const projectId = document.getElementById('editingProjectId').value;
+                const title = document.getElementById('editProjectTitle').value;
+                const description = document.getElementById('editProjectDescription').value;
+                
+                try {
+                    const formData = new FormData();
+                    formData.append('action', 'updateProject');
+                    formData.append('email', userEmail);
+                    formData.append('project_id', projectId);
+                    formData.append('title', title);
+                    formData.append('description', description);
+                    
+                    const response = await fetch('php/projects.php', {
+                        method: 'POST',
+                        body: formData
+                    });
+                    
+                    const data = await response.json();
+                    
+                    if (data.success) {
+                        loadProjects();
+                        renameProjectModal.hide();
+                    } else {
+                        alert('Error: ' + data.message);
+                    }
+                } catch (error) {
+                    alert('Error updating project: ' + error.message);
+                }
+            } else {
+                form.reportValidity();
+            }
+        });
+
+        // Show thumbnail modal
+        function showThumbnailModal(projectId) {
+            document.getElementById('editingThumbnailProjectId').value = projectId;
+            document.getElementById('projectThumbnailEdit').value = '';
+            document.getElementById('thumbnailPreviewEdit').innerHTML = '';
+            thumbnailModalEdit.show();
+        }
+
+        // Save thumbnail
+        document.getElementById('saveThumbnailBtn').addEventListener('click', async function() {
+            const projectId = document.getElementById('editingThumbnailProjectId').value;
+            const thumbnailInput = document.getElementById('projectThumbnailEdit');
+            
+            if (!thumbnailInput.files || !thumbnailInput.files[0]) {
+                alert('Please select an image file');
+                return;
+            }
+            
+            try {
+                const formData = new FormData();
+                formData.append('action', 'updateProject');
+                formData.append('email', userEmail);
+                formData.append('project_id', projectId);
+                formData.append('thumbnail', thumbnailInput.files[0]);
+                
+                const response = await fetch('php/projects.php', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    loadProjects();
+                    thumbnailModalEdit.hide();
+                } else {
+                    alert('Error: ' + data.message);
+                }
+            } catch (error) {
+                alert('Error updating thumbnail: ' + error.message);
+            }
+        });
+
         // Handle modal close events
         document.getElementById('createProjectModal').addEventListener('hidden.bs.modal', function() {
             // Remove all backdrops
@@ -305,6 +542,7 @@
             if (form.checkValidity()) {
                 const title = document.getElementById('projectTitle').value;
                 const description = document.getElementById('projectDescription').value;
+                const thumbnailInput = document.getElementById('projectThumbnail');
                 
                 try {
                     const formData = new FormData();
@@ -312,6 +550,11 @@
                     formData.append('email', userEmail);
                     formData.append('title', title);
                     formData.append('description', description);
+                    
+                    // Add image file if selected
+                    if (thumbnailInput.files && thumbnailInput.files[0]) {
+                        formData.append('thumbnail', thumbnailInput.files[0]);
+                    }
                     
                     const response = await fetch('php/projects.php', {
                         method: 'POST',
@@ -327,6 +570,7 @@
                         // Close modal and reset form
                         createProjectModal.hide();
                         form.reset();
+                        document.getElementById('thumbnailPreview').innerHTML = '';
                     } else {
                         alert('Error: ' + data.message);
                     }
@@ -363,6 +607,36 @@
                 }
             } catch (error) {
                 alert('Error deleting project: ' + error.message);
+            }
+        }
+
+        async function createNewProjectAndNavigate() {
+            // Create a temporary project
+            const defaultTitle = `New Project ${new Date().getTime()}`;
+            const defaultDescription = 'Click to edit this project';
+            
+            try {
+                const formData = new FormData();
+                formData.append('action', 'createProject');
+                formData.append('email', userEmail);
+                formData.append('title', defaultTitle);
+                formData.append('description', defaultDescription);
+                
+                const response = await fetch('php/projects.php', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    // Navigate to edit-project page with project ID
+                    window.location.href = `pages/edit-project.html?id=${data.project_id}`;
+                } else {
+                    alert('Error: ' + data.message);
+                }
+            } catch (error) {
+                alert('Error creating project: ' + error.message);
             }
         }
 

@@ -661,3 +661,8 @@ input[type="range"]::-moz-range-thumb {
 .modal-backdrop.show {
   opacity: 0.3 !important;
 }
+
+/* Smooth Scroll */
+html {
+  scroll-behavior: smooth;
+}
