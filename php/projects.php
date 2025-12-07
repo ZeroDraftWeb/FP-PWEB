@@ -113,6 +113,9 @@ if ($action === 'getUserProfile') {
         $stmt = $pdo->prepare($query);
         $stmt->execute($params);
 
+        // Update session with new username
+        $_SESSION['username'] = $username;
+
         echo json_encode(['success' => true, 'message' => 'Profile updated successfully']);
     } catch (PDOException $e) {
         echo json_encode(['success' => false, 'message' => 'Database error: ' . $e->getMessage()]);

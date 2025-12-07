@@ -237,6 +237,11 @@
                         document.getElementById('confirmPassword').value = '';
                         // Update header name
                         document.getElementById('profileUsername').textContent = fullName;
+
+                        // Update localStorage so index.html sees it immediately
+                        const currentSession = JSON.parse(localStorage.getItem('userSession') || '{}');
+                        currentSession.username = fullName;
+                        localStorage.setItem('userSession', JSON.stringify(currentSession));
                     } else {
                         alert('Error: ' + data.message);
                     }
