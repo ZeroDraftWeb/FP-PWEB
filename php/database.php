@@ -19,12 +19,10 @@ $queries = [
         username VARCHAR(50) UNIQUE NOT NULL,
         email VARCHAR(100) UNIQUE NOT NULL,
         password_hash VARCHAR(255) NOT NULL,
-        membership_status ENUM('basic', 'pro', 'enterprise') DEFAULT 'basic',
-        membership_expiry DATETIME DEFAULT NULL,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
     )",
-    
+
     "CREATE TABLE IF NOT EXISTS projects (
         id INT AUTO_INCREMENT PRIMARY KEY,
         user_id INT NOT NULL,
@@ -35,7 +33,7 @@ $queries = [
         last_opened TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
         FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
     )",
-    
+
     "CREATE TABLE IF NOT EXISTS assets (
         id INT AUTO_INCREMENT PRIMARY KEY,
         project_id INT NOT NULL,
@@ -46,7 +44,7 @@ $queries = [
         uploaded_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         FOREIGN KEY (project_id) REFERENCES projects(id) ON DELETE CASCADE
     )",
-    
+
     "CREATE TABLE IF NOT EXISTS characters (
         id INT AUTO_INCREMENT PRIMARY KEY,
         project_id INT NOT NULL,
@@ -60,10 +58,11 @@ $queries = [
         FOREIGN KEY (project_id) REFERENCES projects(id) ON DELETE CASCADE,
         FOREIGN KEY (image_id) REFERENCES assets(id) ON DELETE SET NULL
     )",
-    
+
     "CREATE TABLE IF NOT EXISTS story_nodes (
         id INT AUTO_INCREMENT PRIMARY KEY,
         project_id INT NOT NULL,
+        dom_id VARCHAR(50),
         title VARCHAR(255) NOT NULL,
         content TEXT,
         position_x INT DEFAULT 0,
@@ -79,7 +78,7 @@ foreach ($queries as $query) {
     try {
         $pdo->exec($query);
     } catch (PDOException $e) {
-        echo "Error creating table: " . $e->getMessage() . "\n";
+        // echo "Error creating table: " . $e->getMessage() . "\n";
     }
 }
 ?>

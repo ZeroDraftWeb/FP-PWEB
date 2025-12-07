@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Authentication Success - BOLOBOX</title>
+</head>
+<body>
+    <div style="display:flex;justify-content:center;align-items:center;height:100vh;">
+        <div>
+            <h2>Authentication Successful!</h2>
+            <p>You will be redirected shortly...</p>
+        </div>
+    </div>
+
+    <script>
+        // Check login status from server and store in localStorage
+        fetch('php/auth.php?action=check_login')
+            .then(response => response.json())
+            .then(data => {
+                if (data.success && data.logged_in) {
+                    // Store user session in localStorage
+                    localStorage.setItem('userSession', JSON.stringify({
+                        email: data.user.email,
+                        username: data.user.username,
+                        rememberMe: false, // OAuth users typically don't use remember me
+                        loginTime: new Date().getTime()
+                    }));
+                    
+                    // Redirect to home page
+                    window.location.href = 'index.html';
+                } else {
+                    // If not logged in, redirect to login page
+                    window.location.href = 'pages/login.html';
+                }
+            })
+            .catch(error => {
+                console.error('Error during OAuth success processing:', error);
+                // If there's an error, redirect to login page
+                window.location.href = 'pages/login.html';
+            });
+    </script>
+</body>
+</html>

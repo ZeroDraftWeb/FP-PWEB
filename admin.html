@@ -78,7 +78,6 @@
                                     <th>ID</th>
                                     <th>Username</th>
                                     <th>Email</th>
-                                    <th>Membership</th>
                                     <th>Joined</th>
                                     <th>Action</th>
                                 </tr>
@@ -150,9 +149,6 @@
                                 <td><strong>${user.id}</strong></td>
                                 <td>${escapeHtml(user.username)}</td>
                                 <td>${escapeHtml(user.email)}</td>
-                                <td>
-                                    <span class="badge bg-info">${user.membership_status}</span>
-                                </td>
                                 <td>${joinDate}</td>
                                 <td>
                                     <button class="btn btn-sm btn-danger" onclick="deleteUser(${user.id}, '${escapeHtml(user.username)}')">

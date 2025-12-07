@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,7 +10,16 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="../css/style.css">
 </head>
+
 <body>
+    <script>
+        // Check if user is logged in immediately
+        const userSession = localStorage.getItem('userSession');
+        if (!userSession) {
+            // User is not logged in, redirect to login page immediately
+            window.location.href = 'login.html';
+        }
+    </script>
     <!-- Navigation Bar -->
     <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container">
@@ -28,9 +38,6 @@
                         <a class="nav-link" href="../index.html#projects-section">Projects</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="membership.html">Membership</a>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link active" href="profile.html">Profile</a>
                     </li>
                     <li class="nav-item">
@@ -47,7 +54,7 @@
         <div id="profile-page" class="row mt-4">
             <div class="col-12">
                 <h1 class="section-title">Profile</h1>
-                <p class="section-subtitle">Manage your account and membership details</p>
+                <p class="section-subtitle">Manage your account details</p>
 
                 <div class="profile-header">
                     <div class="profile-avatar">
@@ -57,14 +64,13 @@
                         <h2 id="profileUsername">Developer Name</h2>
                         <p id="profileEmail">email@example.com</p>
                     </div>
-                    <span class="membership-status" id="membershipStatus">FREE MEMBERSHIP</span>
                 </div>
 
                 <div class="row mb-4">
                     <div class="col-md-6">
                         <div class="card">
                             <div class="card-header">
-                                <h3>Account Information</h3>
+                                <h3>Settings</h3>
                             </div>
                             <div class="card-body">
                                 <form>
@@ -74,82 +80,57 @@
                                     </div>
                                     <div class="mb-3">
                                         <label for="email" class="form-label">Email</label>
-                                        <input type="email" class="form-control" id="email" value="email@example.com" readonly>
+                                        <input type="email" class="form-control" id="email" value="email@example.com"
+                                            readonly>
                                     </div>
                                     <div class="mb-3">
                                         <label for="password" class="form-label">Password</label>
-                                        <input type="password" class="form-control" id="password" placeholder="Enter new password">
+                                        <input type="password" class="form-control" id="password"
+                                            placeholder="Enter new password">
                                     </div>
                                     <div class="mb-3">
                                         <label for="confirmPassword" class="form-label">Confirm Password</label>
-                                        <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm new password">
+                                        <input type="password" class="form-control" id="confirmPassword"
+                                            placeholder="Confirm new password">
                                     </div>
-                                    <button type="button" class="btn btn-primary w-100" onclick="updateProfile()">Update Profile</button>
+                                    <button type="button" class="btn btn-primary w-100" onclick="updateProfile()">Update
+                                        Profile</button>
                                 </form>
                             </div>
                         </div>
                     </div>
 
                     <div class="col-md-6">
-                        <div class="card">
+                        <div class="card h-100">
                             <div class="card-header">
                                 <h3>Statistics</h3>
                             </div>
                             <div class="card-body">
-                                <div class="stats-grid">
-                                    <div class="stat-card">
-                                        <div class="stat-value" id="statsProjects">5</div>
-                                        <div class="stat-label">Active Projects</div>
+                                <div class="row">
+                                    <div class="col-6 mb-3">
+                                        <div class="stat-card">
+                                            <i class="fas fa-project-diagram"></i>
+                                            <div class="stat-value" id="statsProjects">-</div>
+                                            <div class="stat-label">Total Projects</div>
+                                        </div>
                                     </div>
-                                    <div class="stat-card">
-                                        <div class="stat-value" id="statsAssets">24</div>
-                                        <div class="stat-label">Total Assets</div>
+                                    <div class="col-6 mb-3">
+                                        <div class="stat-card">
+                                            <i class="fas fa-cubes"></i>
+                                            <div class="stat-value" id="statsAssets">-</div>
+                                            <div class="stat-label">Total Assets</div>
+                                        </div>
                                     </div>
-                                    <div class="stat-card">
-                                        <div class="stat-value" id="statsCharacters">12</div>
-                                        <div class="stat-label">Characters Created</div>
-                                    </div>
-                                    <div class="stat-card">
-                                        <div class="stat-value" id="statsStorylines">3</div>
-                                        <div class="stat-label">Storylines</div>
-                                    </div>
+                                </div>
+                                <div class="mt-3 text-center">
+                                    <p class="text-muted">More statistics coming soon!</p>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="row">
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <h3>Membership History</h3>
-                            </div>
-                            <div class="card-body">
-                                <div class="table-responsive">
-                                    <table class="table table-dark table-striped">
-                                        <thead>
-                                            <tr>
-                                                <th>Date</th>
-                                                <th>Plan</th>
-                                                <th>Amount</th>
-                                                <th>Status</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>2025-01-15</td>
-                                                <td>Common (Free)</td>
-                                                <td>Rp 0</td>
-                                                <td><span class="badge bg-success">Active</span></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <!-- Membership history section removed - no membership system -->
             </div>
         </div>
     </div>
@@ -161,7 +142,7 @@
 
         // Handle navbar Projects link
         document.querySelectorAll('a[href="../index.html#projects-section"]').forEach(link => {
-            link.addEventListener('click', function(e) {
+            link.addEventListener('click', function (e) {
                 e.preventDefault();
                 // Navigate to index.html and let the scroll happen after page load
                 window.location.href = '../index.html#projects-section';
@@ -169,7 +150,7 @@
         });
 
         // Load profile data on page load
-        window.addEventListener('load', function() {
+        window.addEventListener('load', function () {
             checkLoginStatus();
             loadProfileData();
         });
@@ -181,11 +162,11 @@
                 window.location.href = 'login.html';
                 return;
             }
-            
+
             try {
                 const user = JSON.parse(userSession);
                 userEmail = user.email;
-                
+
                 // Update email field
                 document.getElementById('email').value = userEmail;
             } catch (e) {
@@ -198,24 +179,18 @@
             try {
                 const response = await fetch(`../php/projects.php?action=getUserProfile&email=${encodeURIComponent(userEmail)}`);
                 const data = await response.json();
-                
+
                 if (data.success) {
                     // Update user info
                     document.getElementById('profileUsername').textContent = data.user.username;
                     document.getElementById('profileEmail').textContent = data.user.email;
                     document.getElementById('fullName').value = data.user.username;
-                    
-                    // Update membership status
-                    const membershipStatus = data.user.membership_status;
-                    const statusElement = document.getElementById('membershipStatus');
-                    statusElement.textContent = membershipStatus.toUpperCase() + ' MEMBERSHIP';
-                    statusElement.className = 'membership-status ' + membershipStatus;
-                    
+
+                    // Membership status section removed - no membership system
+
                     // Update statistics
                     document.getElementById('statsProjects').textContent = data.stats.projects;
                     document.getElementById('statsAssets').textContent = data.stats.assets;
-                    document.getElementById('statsCharacters').textContent = data.stats.characters;
-                    document.getElementById('statsStorylines').textContent = data.stats.storylines;
                 } else {
                     console.error('Error loading profile:', data.message);
                 }
@@ -228,20 +203,50 @@
             const fullName = document.getElementById('fullName').value;
             const password = document.getElementById('password').value;
             const confirmPassword = document.getElementById('confirmPassword').value;
-            
+
             if (password && password !== confirmPassword) {
                 alert('Passwords do not match');
                 return;
             }
-            
+
             if (!fullName) {
                 alert('Full name is required');
                 return;
             }
-            
-            // TODO: Implement backend endpoint for updating profile
-            alert('Profile update functionality will be implemented soon');
+
+            // Send update request
+            const formData = new FormData();
+            formData.append('action', 'updateUserProfile');
+            formData.append('email', userEmail);
+            formData.append('username', fullName);
+
+            if (password) {
+                formData.append('password', password);
+            }
+
+            fetch('../php/projects.php', {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('Profile updated successfully!');
+                        // Clear password fields
+                        document.getElementById('password').value = '';
+                        document.getElementById('confirmPassword').value = '';
+                        // Update header name
+                        document.getElementById('profileUsername').textContent = fullName;
+                    } else {
+                        alert('Error: ' + data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('An error occurred while updating profile');
+                });
         }
     </script>
 </body>
+
 </html>

@@ -3,32 +3,51 @@ header('Content-Type: application/json');
 session_start();
 require_once 'database.php';
 
-// Get user info from request
-$action = $_GET['action'] ?? $_POST['action'] ?? '';
-$email = $_GET['email'] ?? $_POST['email'] ?? '';
-
-if (!$email) {
-    echo json_encode(['success' => false, 'message' => 'Email is required']);
-    exit;
+// Get input data (handle JSON or form data)
+$input = [];
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && stripos($_SERVER['CONTENT_TYPE'] ?? '', 'application/json') !== false) {
+    $input = json_decode(file_get_contents('php://input'), true) ?? [];
 }
 
-// Get user ID from email
-$stmt = $pdo->prepare("SELECT id FROM users WHERE email = ?");
-$stmt->execute([$email]);
-$user = $stmt->fetch();
+// Get action from request
+$action = $_GET['action'] ?? $_POST['action'] ?? $input['action'] ?? '';
 
-if (!$user) {
-    echo json_encode(['success' => false, 'message' => 'User not found']);
-    exit;
+// For actions that require user identification by email, get the email parameter
+$email = $_GET['email'] ?? $_POST['email'] ?? $input['email'] ?? '';
+
+// Get user ID - use different methods based on the action
+if ($action === 'getProjectById') {
+    // For getProjectById, use the session-based user ID since user is already authenticated
+    if (!isset($_SESSION['user_id'])) {
+        echo json_encode(['success' => false, 'message' => 'User not authenticated']);
+        exit;
+    }
+    $user_id = $_SESSION['user_id'];
+} else {
+    // For other actions, require email parameter to identify the user
+    if (!$email) {
+        echo json_encode(['success' => false, 'message' => 'Email is required']);
+        exit;
+    }
+
+    // Get user ID from email
+    $stmt = $pdo->prepare("SELECT id FROM users WHERE email = ?");
+    $stmt->execute([$email]);
+    $user = $stmt->fetch();
+
+    if (!$user) {
+        echo json_encode(['success' => false, 'message' => 'User not found']);
+        exit;
+    }
+
+    $user_id = $user['id'];
 }
-
-$user_id = $user['id'];
 
 // Handle different actions
 if ($action === 'getUserProfile') {
     try {
         // Get user info
-        $stmt = $pdo->prepare("SELECT username, email, membership_status, created_at FROM users WHERE id = ?");
+        $stmt = $pdo->prepare("SELECT username, email, created_at FROM users WHERE id = ?");
         $stmt->execute([$user_id]);
         $user_info = $stmt->fetch(PDO::FETCH_ASSOC);
         
@@ -57,11 +76,44 @@ if ($action === 'getUserProfile') {
             'user' => $user_info,
             'stats' => [
                 'projects' => $projects_count,
-                'assets' => $assets_count,
+                'assets' => $assets_count + $characters_count,
                 'characters' => $characters_count,
                 'storylines' => $storylines_count
             ]
         ]);
+    } catch (PDOException $e) {
+        echo json_encode(['success' => false, 'message' => 'Database error: ' . $e->getMessage()]);
+    }
+} elseif ($action === 'updateUserProfile') {
+    $username = $_POST['username'] ?? '';
+    $password = $_POST['password'] ?? '';
+    
+    // Validation
+    if (empty($username)) {
+        echo json_encode(['success' => false, 'message' => 'Full name is required']);
+        exit;
+    }
+
+    try {
+        $updates = ["username = ?"];
+        $params = [$username];
+
+        if (!empty($password)) {
+            if (strlen($password) < 6) {
+                echo json_encode(['success' => false, 'message' => 'Password must be at least 6 characters']);
+                exit;
+            }
+            $updates[] = "password_hash = ?";
+            $params[] = password_hash($password, PASSWORD_DEFAULT);
+        }
+
+        $params[] = $user_id;
+        
+        $query = "UPDATE users SET " . implode(", ", $updates) . " WHERE id = ?";
+        $stmt = $pdo->prepare($query);
+        $stmt->execute($params);
+
+        echo json_encode(['success' => true, 'message' => 'Profile updated successfully']);
     } catch (PDOException $e) {
         echo json_encode(['success' => false, 'message' => 'Database error: ' . $e->getMessage()]);
     }
@@ -231,27 +283,273 @@ if ($action === 'getUserProfile') {
     } catch (PDOException $e) {
         echo json_encode(['success' => false, 'message' => 'Database error: ' . $e->getMessage()]);
     }
-} elseif ($action === 'deleteProject') {
+} elseif ($action === 'getProjectById') {
+    $project_id = $_GET['id'] ?? '';
+
+    if (!$project_id) {
+        echo json_encode(['success' => false, 'message' => 'Project ID is required']);
+        exit;
+    }
+
+    try {
+        // Verify project belongs to user
+        $stmt = $pdo->prepare("SELECT id, title, description, thumbnail, created_at, last_opened FROM projects WHERE id = ? AND user_id = ?");
+        $stmt->execute([$project_id, $user_id]);
+        $project = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($project) {
+            // Fetch Assets
+            $stmt = $pdo->prepare("SELECT * FROM assets WHERE project_id = ? ORDER BY uploaded_at DESC");
+            $stmt->execute([$project_id]);
+            $project['assets'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            // Fetch Characters
+            $stmt = $pdo->prepare("SELECT * FROM characters WHERE project_id = ?");
+            $stmt->execute([$project_id]);
+            $project['characters'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            // Fetch Story Nodes
+            $stmt = $pdo->prepare("SELECT * FROM story_nodes WHERE project_id = ?");
+            $stmt->execute([$project_id]);
+            $project['story_nodes'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            echo json_encode([
+                'success' => true,
+                'project' => $project
+            ]);
+        } else {
+            echo json_encode(['success' => false, 'message' => 'Project not found or unauthorized']);
+        }
+    } catch (PDOException $e) {
+        echo json_encode(['success' => false, 'message' => 'Database error: ' . $e->getMessage()]);
+    }
+} elseif ($action === 'uploadAsset') {
     $project_id = $_POST['project_id'] ?? '';
     
     if (!$project_id) {
         echo json_encode(['success' => false, 'message' => 'Project ID is required']);
         exit;
     }
+
+    // Verify project ownership (security)
+    $stmt = $pdo->prepare("SELECT id FROM projects WHERE id = ? AND user_id = ?");
+    $stmt->execute([$project_id, $user_id]);
+    if (!$stmt->fetch()) {
+        echo json_encode(['success' => false, 'message' => 'Unauthorized']);
+        exit;
+    }
+
+    if (isset($_FILES['file']) && $_FILES['file']['size'] > 0) {
+        $upload_dir = dirname(__DIR__) . '/assets/uploads/';
+        if (!is_dir($upload_dir)) mkdir($upload_dir, 0755, true);
+
+        $file = $_FILES['file'];
+        $file_ext = pathinfo($file['name'], PATHINFO_EXTENSION);
+        $file_name = uniqid('asset_') . '.' . $file_ext;
+        $file_path = $upload_dir . $file_name;
+        $relative_path = 'assets/uploads/' . $file_name;
+        $original_name = $file['name'];
+
+        if (move_uploaded_file($file['tmp_name'], $file_path)) {
+            try {
+                $stmt = $pdo->prepare("INSERT INTO assets (project_id, file_path, file_name, category) VALUES (?, ?, ?, 'character')");
+                $stmt->execute([$project_id, $relative_path, $original_name]);
+                
+                echo json_encode(['success' => true, 'message' => 'Asset uploaded', 'asset' => [
+                    'id' => $pdo->lastInsertId(),
+                    'file_path' => $relative_path,
+                    'file_name' => $original_name
+                ]]);
+            } catch (PDOException $e) {
+                echo json_encode(['success' => false, 'message' => 'Database error: ' . $e->getMessage()]);
+            }
+        } else {
+            echo json_encode(['success' => false, 'message' => 'Upload failed']);
+        }
+    } else {
+        echo json_encode(['success' => false, 'message' => 'No file uploaded']);
+    }
+} elseif ($action === 'deleteAsset') {
+    $project_id = $_POST['project_id'] ?? '';
+    $asset_id = $_POST['asset_id'] ?? '';
     
+    if (!$project_id || !$asset_id) {
+        echo json_encode(['success' => false, 'message' => 'Project ID and Asset ID are required']);
+        exit;
+    }
+
+    // Verify project ownership (security)
+    $stmt = $pdo->prepare("SELECT id FROM projects WHERE id = ? AND user_id = ?");
+    $stmt->execute([$project_id, $user_id]);
+    if (!$stmt->fetch()) {
+        echo json_encode(['success' => false, 'message' => 'Unauthorized']);
+        exit;
+    }
+
+    try {
+        // Get asset file path before deleting from database
+        $stmt = $pdo->prepare("SELECT file_path FROM assets WHERE id = ? AND project_id = ?");
+        $stmt->execute([$asset_id, $project_id]);
+        $asset = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if (!$asset) {
+            echo json_encode(['success' => false, 'message' => 'Asset not found']);
+            exit;
+        }
+
+        // Delete file from filesystem
+        $file_path = dirname(__DIR__) . '/' . $asset['file_path'];
+        if (file_exists($file_path)) {
+            unlink($file_path);
+        }
+
+        // Delete from database
+        $stmt = $pdo->prepare("DELETE FROM assets WHERE id = ? AND project_id = ?");
+        $stmt->execute([$asset_id, $project_id]);
+
+        echo json_encode(['success' => true, 'message' => 'Asset deleted successfully']);
+    } catch (PDOException $e) {
+        echo json_encode(['success' => false, 'message' => 'Database error: ' . $e->getMessage()]);
+    }
+} elseif ($action === 'saveCharacter') {
+    $project_id = $_POST['project_id'] ?? '';
+    $name = $_POST['name'] ?? 'New Character';
+    $hp = $_POST['hp'] ?? 100;
+    $attack = $_POST['attack'] ?? 50;
+    $speed = $_POST['speed'] ?? 50;
+    $image_id = !empty($_POST['image_id']) ? $_POST['image_id'] : null;
+
+    $character_id = $_POST['character_id'] ?? null;
+
+    if (!$project_id) {
+        echo json_encode(['success' => false, 'message' => 'Project ID required']);
+        exit;
+    }
+
+    // Verify ownership
+    $stmt = $pdo->prepare("SELECT id FROM projects WHERE id = ? AND user_id = ?");
+    $stmt->execute([$project_id, $user_id]);
+    if (!$stmt->fetch()) {
+        echo json_encode(['success' => false, 'message' => 'Unauthorized']);
+        exit;
+    }
+
+    try {
+        if ($character_id) {
+            // Update existing character
+            $stmt = $pdo->prepare("UPDATE characters SET name = ?, hp = ?, attack = ?, speed = ?, image_id = ? WHERE id = ? AND project_id = ?");
+            $stmt->execute([$name, $hp, $attack, $speed, $image_id, $character_id, $project_id]);
+            echo json_encode(['success' => true, 'message' => 'Character updated']);
+        } else {
+            // Insert new character
+            $stmt = $pdo->prepare("INSERT INTO characters (project_id, name, hp, attack, speed, image_id) VALUES (?, ?, ?, ?, ?, ?)");
+            $stmt->execute([$project_id, $name, $hp, $attack, $speed, $image_id]);
+            echo json_encode(['success' => true, 'message' => 'Character saved']);
+        }
+        
+        // Removed duplicate echo
+    } catch (PDOException $e) {
+        echo json_encode(['success' => false, 'message' => 'Database error: ' . $e->getMessage()]);
+    }
+} elseif ($action === 'deleteCharacter') {
+    $project_id = $_POST['project_id'] ?? '';
+    $character_id = $_POST['character_id'] ?? '';
+
+    if (!$project_id || !$character_id) {
+        echo json_encode(['success' => false, 'message' => 'Project ID and Character ID required']);
+        exit;
+    }
+
+    // Verify ownership
+    $stmt = $pdo->prepare("SELECT id FROM projects WHERE id = ? AND user_id = ?");
+    $stmt->execute([$project_id, $user_id]);
+    if (!$stmt->fetch()) {
+        echo json_encode(['success' => false, 'message' => 'Unauthorized']);
+        exit;
+    }
+
+    try {
+        $stmt = $pdo->prepare("DELETE FROM characters WHERE id = ? AND project_id = ?");
+        $stmt->execute([$character_id, $project_id]);
+        echo json_encode(['success' => true, 'message' => 'Character deleted']);
+    } catch (PDOException $e) {
+        echo json_encode(['success' => false, 'message' => 'Database error: ' . $e->getMessage()]);
+    }
+} elseif ($action === 'saveStoryNodes') {
+    // Expecting a JSON payload because nodes are complex
+    // $input is typically parsed at the top of the file now
+    if (empty($input)) {
+         $input = json_decode(file_get_contents('php://input'), true);
+    }
+    $project_id = $input['project_id'] ?? '';
+    $nodes = $input['nodes'] ?? [];
+
+    if (!$project_id || $project_id != $_GET['id']) { // Check both body and potentially query param
+         // Fallback if not in body, check GET (standardize on one)
+         $project_id = $_GET['id'] ?? $project_id;
+    }
+
+    if (!$project_id) {
+        echo json_encode(['success' => false, 'message' => 'Project ID required']);
+        exit;
+    }
+
+    // Verify ownership
+    $stmt = $pdo->prepare("SELECT id FROM projects WHERE id = ? AND user_id = ?");
+    $stmt->execute([$project_id, $user_id]);
+    if (!$stmt->fetch()) {
+        echo json_encode(['success' => false, 'message' => 'Unauthorized']);
+        exit;
+    }
+
+    try {
+        $pdo->beginTransaction();
+        
+        // Wipe existing nodes for simplicity (full sync)
+        $stmt = $pdo->prepare("DELETE FROM story_nodes WHERE project_id = ?");
+        $stmt->execute([$project_id]);
+
+        $stmt = $pdo->prepare("INSERT INTO story_nodes (project_id, dom_id, title, content, position_x, position_y, connections) VALUES (?, ?, ?, ?, ?, ?, ?)");
+        
+        foreach ($nodes as $node) {
+            $stmt->execute([
+                $project_id,
+                $node['dom_id'] ?? null, // Use frontend ID
+                $node['title'] ?? 'Node',
+                $node['content'] ?? '',
+                $node['x'] ?? 0,
+                $node['y'] ?? 0,
+                json_encode($node['connections'] ?? [])
+            ]);
+        }
+        
+        $pdo->commit();
+        echo json_encode(['success' => true, 'message' => 'Story saved']);
+    } catch (PDOException $e) {
+        $pdo->rollBack();
+        echo json_encode(['success' => false, 'message' => 'Database error: ' . $e->getMessage()]);
+    }
+} elseif ($action === 'deleteProject') {
+    $project_id = $_POST['project_id'] ?? '';
+
+    if (!$project_id) {
+        echo json_encode(['success' => false, 'message' => 'Project ID is required']);
+        exit;
+    }
+
     try {
         // Verify project belongs to user
         $stmt = $pdo->prepare("SELECT id FROM projects WHERE id = ? AND user_id = ?");
         $stmt->execute([$project_id, $user_id]);
-        
+
         if (!$stmt->fetch()) {
             echo json_encode(['success' => false, 'message' => 'Project not found or unauthorized']);
             exit;
         }
-        
+
         $stmt = $pdo->prepare("DELETE FROM projects WHERE id = ? AND user_id = ?");
         $stmt->execute([$project_id, $user_id]);
-        
+
         echo json_encode(['success' => true, 'message' => 'Project deleted successfully']);
     } catch (PDOException $e) {
         echo json_encode(['success' => false, 'message' => 'Database error: ' . $e->getMessage()]);

@@ -4,101 +4,84 @@ GDD Organizer adalah platform terpadu untuk pengembang game indie yang ingin men
 
 ## Fitur Utama
 
-- **Asset Gallery** - Upload, organisasi, dan pratinjau aset game
-- **Character Stat Builder** - Definisikan dan seimbangkan atribut karakter dengan slider intuitif
-- **Interactive Storyline** - Buat narasi bercabang dengan editor berbasis node
-- **Export as PDF** - Hasilkan dokumen Game Design Document yang dapat dicetak dan dibagikan
+- **Asset Gallery** - Upload dan kelola aset game dalam tampilan galeri horizontal yang modern.
+- **Character Stat Builder** - Definisikan atribut karakter dengan slider visual intuitif dalam tampilan split-view.
+- **Interactive Storyline Editor** - Editor narasi yang kuat dengan fitur:
+    - **Visual Nodes**: Tambahkan dan edit node cerita.
+    - **Connections**: Sambungkan node untuk membuat alur cerita bercabang (Branching Narrative).
+    - **Zoom/Pan**: Navigasi kanvas cerita yang luas dengan fitur zoom in/out.
+    - **Save Story**: Simpan progres cerita Anda langsung dari toolbar.
+- **Edit Project Dashboard** - UI yang didesain ulang sepenuhnya dengan tema "Dark Dashboard" yang premium.
+- **Export as PDF** - (Coming Soon) Hasilkan dokumen Game Design Document yang dapat dicetak.
 
 ## Teknologi yang Digunakan
 
-- **Frontend**: HTML, CSS, JavaScript dengan Bootstrap 5
-- **Backend**: PHP Native dengan MySQL Database
-- **UI/UX**: Desain gelap dengan estetika industri untuk mengurangi ketegangan mata
+- **Frontend**: HTML5, Modern CSS (Custom Dark Theme), JavaScript (Vanilla ES6+).
+- **Backend**: PHP 8+ dengan PDO untuk keamanan database.
+- **Database**: MySQL.
+- **Library**: Bootstrap 5, Font Awesome Icons.
 
 ## Cara Menjalankan Aplikasi
 
 ### Persyaratan Sistem
 
-1. **XAMPP** (atau server web lain dengan PHP dan MySQL)
-   - Download dari: https://www.apachefriends.org/
+1. **XAMPP** (atau web server stack lain dengan PHP & MySQL).
+2. **Browser Modern** (Chrome, Firefox, Edge).
 
 ### Instalasi
 
-1. **Install XAMPP**
+1. **Install XAMPP** jika belum.
 2. **Letakkan folder project** ke dalam direktori `htdocs`:
-   - Untuk Windows: `C:\xampp\htdocs\`
-3. **Mulai Apache dan MySQL** melalui XAMPP Control Panel
-4. **Akses aplikasi** melalui browser: `http://localhost/nama-folder-project`
+   - Contoh Windows: `C:\xampp\htdocs\FP-PWEB-main\`
+3. **Mulai Apache dan MySQL** melalui XAMPP Control Panel.
+4. **Setup Database Otomatis**:
+   - Aplikasi ini dilengkapi dengan fitur setup otomatis. Cukup buka halaman utama aplikasi, dan jika database belum ada, aplikasi akan mencoba membuatnya (pastikan user root tanpa password, konfigurasi default XAMPP).
+   - **Manual Setup (Jika otomatis gagal):**
+     1. Buka `phpMyAdmin`.
+     2. Buat database `gdd_organizer`.
+     3. Import isi struktur tabel dari file `php/database.php` (atau biarkan script `php/setup.php` menjalankannya saat akses pertama).
+     4. Tabel yang dibutuhkan: `users`, `projects`, `assets`, `characters`, `story_nodes`.
 
-### Konfigurasi Database
+5. **Akses Aplikasi**:
+   - Buka browser dan kunjungi: `http://localhost/FP-PWEB-main/` (sesuaikan dengan nama folder Anda).
 
-1. **Buka phpMyAdmin** melalui XAMPP Control Panel (http://localhost/phpmyadmin)
-2. **Buat database baru** dengan nama `gdd_organizer`
-3. **Atau jalankan file database secara manual** melalui terminal jika Anda memiliki akses ke MySQL
-
-### Struktur File
+### Struktur File Penting
 
 ```
-FP/ (root project)
-├── index.html              # Halaman utama
-├── nav.html                # Template navigasi
-├── css/
-│   └── style.css          # Styling utama (dark theme & industrial aesthetic)
-├── js/
-│   └── main.js            # Fungsi JavaScript utama
+FP/
+├── index.html              # Halaman Landing & Dashboard Utama
 ├── pages/
-│   ├── login.html         # Halaman login
-│   ├── signup.html        # Halaman pendaftaran
-│   ├── edit-project.html  # Halaman edit proyek (dengan sidebar navigasi)
-│   ├── membership.html    # Halaman membership
-│   └── profile.html       # Halaman profil
-├── assets/
-│   ├── images/            # Gambar placeholder
-│   └── uploads/           # Tempat upload file (akan dibuat secara otomatis)
-└── php/
-    ├── database.php       # Konfigurasi dan skema database
-    ├── auth.php           # Fungsi autentikasi
-    ├── upload.php         # Fungsi upload file
-    └── api.php            # API endpoints
+│   ├── login.html          # Authentication
+│   ├── edit-project.html   # INTI APLIKASI: Editor Proyek Lengkap (UI Baru)
+│   └── profile.html        # Manajemen Profil User
+├── css/
+│   └── style.css           # Styling utama (Dark Theme, Custom Sliders, Nodes)
+├── php/
+│   ├── database.php        # Koneksi DB & Skema Tabel
+│   ├── auth.php            # Login/Register/Session
+│   └── projects.php        # API Proyek (CRUD, Uploads, Save Story)
+└── assets/uploads/         # Direktori penyimpanan file user
 ```
 
-## Cara Menggunakan Aplikasi
+## Panduan Penggunaan
 
-1. **Pendaftaran & Login**
-   - Akses halaman signup untuk membuat akun
-   - Gunakan halaman login untuk masuk ke dashboard
-
-2. **Membuat Proyek Baru**
-   - Setelah login, klik "Create New Project" dari dashboard
-   - Isi detail proyek Anda
-
-3. **Menggunakan Fitur-fitur**
-   - **Asset Gallery**: Upload dan kelola aset game Anda
-   - **Character Builder**: Gunakan slider untuk menyesuaikan statistik karakter
-   - **Storyline Editor**: Buat narasi bercabang untuk game Anda
-   - **Export PDF**: Hasilkan dokumen GDD yang dapat dibagikan
-
-## Sistem Navigasi
-
-Aplikasi ini menggunakan sistem navigasi dua tingkat:
-- **Navbar atas**: Untuk berpindah antar halaman utama
-- **Sidebar (di halaman edit project)**: Untuk navigasi antar komponen dalam proyek
-
-Sistem navigasi otomatis mendeteksi halaman mana yang sedang aktif dan menandainya dengan benar.
-
-## Panduan Pengembangan
-
-Kode diorganisir dengan cara yang memudahkan pengembangan lebih lanjut:
-- Semua file CSS disatukan dalam satu file untuk kemudahan perawatan
-- JavaScript modular dengan fungsi-fungsi terpisah
-- Struktur PHP dengan file-file terpisah untuk fungsionalitas berbeda
+1. **Buat Akun**: Register akun baru lalu Login.
+2. **Dashboard**: Buat proyek baru dengan mengklik "Create New Project".
+3. **Edit Project**: Masuk ke halaman editor proyek yang baru didesain ulang.
+   - **Upload Asset**: Gunakan tombol di bagian "Asset Gallery".
+   - **Edit Karakter**: Masukkan nama dan geser slider stat di "Character Stat Builder", lalu Simpan.
+   - **Buat Cerita**:
+     - Klik **(+)** untuk tambah node.
+     - Klik **(Link)** untuk masuk mode koneksi -> Klik Node Awal -> Klik Node Tujuan.
+     - Double-klik node untuk mengedit teks.
+     - Klik **(Save)** di toolbar floppy disk untuk menyimpan cerita.
 
 ## Catatan Penting
 
-- Dalam lingkungan produksi, pastikan untuk menghubungkan sistem pembayaran QRIS BCA dengan API yang sebenarnya
-- File upload aman dengan validasi tipe file dan ukuran
-- Semua input pengguna disaring untuk mencegah serangan injeksi
+- **Akses**: Pastikan mengakses via `http://localhost/...` dan BUKAN `file://...` agar fitur backend berjalan.
+- **Email Save Error (Fixed)**: Logika penyimpanan cerita sekarang mendukung validasi yang benar tanpa error "email required".
+- **Start Node (Fixed)**: Node awal default sekarang terhubung dengan benar ke sistem data.
 
 ## Lisensi
 
-Proyek ini dibuat untuk tujuan pendidikan.
+Proyek ini dibuat untuk tujuan pendidikan (Final Project PWEB).

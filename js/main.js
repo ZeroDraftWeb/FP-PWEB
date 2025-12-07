@@ -51,7 +51,6 @@ function loadNav() {
                             <div class="navbar-nav">
                                 <a class="nav-link" href="index.html">Home</a>
                                 <a class="nav-link" href="pages/edit-project.html">Edit Project</a>
-                                <a class="nav-link" href="pages/membership.html">Membership</a>
                                 <a class="nav-link" href="pages/profile.html">Profile</a>
                             </div>
                         </div>

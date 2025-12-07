@@ -17,7 +17,7 @@ $action = $_GET['action'] ?? $_POST['action'] ?? 'list';
 
 if ($action === 'list') {
     try {
-        $stmt = $pdo->prepare("SELECT id, username, email, membership_status, created_at FROM users ORDER BY created_at DESC");
+        $stmt = $pdo->prepare("SELECT id, username, email, created_at FROM users ORDER BY created_at DESC");
         $stmt->execute();
         $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
         

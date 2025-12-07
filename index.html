@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,6 +10,7 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
     <!-- Navigation Bar -->
     <nav class="navbar navbar-expand-lg navbar-dark">
@@ -27,14 +29,18 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#projects-section">Projects</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="pages/membership.html">Membership</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="pages/profile.html">Profile</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="logoutLink" href="pages/login.html">Logout</a>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            Account
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="pages/profile.html">Profile</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" id="logoutLink" href="pages/login.html">Logout</a></li>
+                        </ul>
                     </li>
                 </ul>
             </div>
@@ -56,11 +62,16 @@
                     <div class="col-12">
                         <h2 class="section-title" id="welcomeTitle">Hello, Developer</h2>
                         <p class="section-subtitle">Your recently opened projects</p>
+                        <button class="btn btn-outline-light mb-3" id="viewProjectsBtn">
+                            <i class="fas fa-sync-alt me-2"></i>View Projects
+                        </button>
                     </div>
                 </div>
 
-                <div class="row">
-                    <div class="col-md-3 col-sm-6 mb-4">
+                <div class="row" id="projects-container">
+                    <!-- Projects will be loaded here dynamically -->
+                    <!-- Default example projects for first-time users -->
+                    <div class="col-md-3 col-sm-6 mb-4 example-project">
                         <div class="project-card">
                             <div class="project-icon">
                                 <i class="fas fa-gamepad"></i>
@@ -74,7 +85,7 @@
                         </div>
                     </div>
 
-                    <div class="col-md-3 col-sm-6 mb-4">
+                    <div class="col-md-3 col-sm-6 mb-4 example-project">
                         <div class="project-card">
                             <div class="project-icon">
                                 <i class="fas fa-dragon"></i>
@@ -88,7 +99,7 @@
                         </div>
                     </div>
 
-                    <div class="col-md-3 col-sm-6 mb-4">
+                    <div class="col-md-3 col-sm-6 mb-4 example-project">
                         <div class="project-card">
                             <div class="project-icon">
                                 <i class="fas fa-space-shuttle"></i>
@@ -114,7 +125,8 @@
     </div>
 
     <!-- Modal for Creating New Project -->
-    <div class="modal fade" id="createProjectModal" tabindex="-1" aria-labelledby="createProjectModalLabel" aria-hidden="true">
+    <div class="modal fade" id="createProjectModal" tabindex="-1" aria-labelledby="createProjectModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -125,30 +137,37 @@
                     <form id="createProjectForm">
                         <div class="mb-3">
                             <label for="projectTitle" class="form-label">Project Title</label>
-                            <input type="text" class="form-control" id="projectTitle" required placeholder="Enter project title" style="background-color: #ffffff !important; color: #000000 !important; border: 2px solid #dee2e6 !important; caret-color: #000000 !important;">
+                            <input type="text" class="form-control" id="projectTitle" required
+                                placeholder="Enter project title"
+                                style="background-color: #ffffff !important; color: #000000 !important; border: 2px solid #dee2e6 !important; caret-color: #000000 !important;">
                         </div>
                         <div class="mb-3">
                             <label for="projectDescription" class="form-label">Description</label>
-                            <textarea class="form-control" id="projectDescription" rows="3" required placeholder="Describe your game project" style="background-color: #ffffff !important; color: #000000 !important; border: 2px solid #dee2e6 !important; caret-color: #000000 !important;"></textarea>
+                            <textarea class="form-control" id="projectDescription" rows="3" required
+                                placeholder="Describe your game project"
+                                style="background-color: #ffffff !important; color: #000000 !important; border: 2px solid #dee2e6 !important; caret-color: #000000 !important;"></textarea>
                         </div>
                         <div class="mb-3">
                             <label for="projectThumbnail" class="form-label">Project Thumbnail (Optional)</label>
-                            <input type="file" class="form-control" id="projectThumbnail" accept="image/*" style="background-color: #ffffff !important; color: #000000 !important; border: 2px solid #dee2e6 !important;">
-                            <small class="text-muted d-block mt-2">Supported formats: JPEG, PNG, GIF, WebP. Max size: 5MB. If no image is provided, a gamepad icon will be used.</small>
+                            <input type="file" class="form-control" id="projectThumbnail" accept="image/*"
+                                style="background-color: #ffffff !important; color: #000000 !important; border: 2px solid #dee2e6 !important;">
+                            <small class="text-muted d-block mt-2">Supported formats: JPEG, PNG, GIF, WebP. Max size:
+                                5MB. If no image is provided, a gamepad icon will be used.</small>
                             <div id="thumbnailPreview" class="mt-2"></div>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary" id="saveProjectBtn">Create Project</button>
+                    <button type="button" class="btn btn-primary" id="createProjectBtn">Create Project</button>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- Modal for Renaming Project -->
-    <div class="modal fade" id="renameProjectModal" tabindex="-1" aria-labelledby="renameProjectModalLabel" aria-hidden="true">
+    <div class="modal fade" id="renameProjectModal" tabindex="-1" aria-labelledby="renameProjectModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -159,11 +178,13 @@
                     <form id="renameProjectForm">
                         <div class="mb-3">
                             <label for="editProjectTitle" class="form-label">Project Title</label>
-                            <input type="text" class="form-control" id="editProjectTitle" required style="background-color: #ffffff !important; color: #000000 !important; border: 2px solid #dee2e6 !important; caret-color: #000000 !important;">
+                            <input type="text" class="form-control" id="editProjectTitle" required
+                                style="background-color: #ffffff !important; color: #000000 !important; border: 2px solid #dee2e6 !important; caret-color: #000000 !important;">
                         </div>
                         <div class="mb-3">
                             <label for="editProjectDescription" class="form-label">Description</label>
-                            <textarea class="form-control" id="editProjectDescription" rows="3" required style="background-color: #ffffff !important; color: #000000 !important; border: 2px solid #dee2e6 !important; caret-color: #000000 !important;"></textarea>
+                            <textarea class="form-control" id="editProjectDescription" rows="3" required
+                                style="background-color: #ffffff !important; color: #000000 !important; border: 2px solid #dee2e6 !important; caret-color: #000000 !important;"></textarea>
                         </div>
                         <input type="hidden" id="editingProjectId">
                     </form>
@@ -177,7 +198,8 @@
     </div>
 
     <!-- Modal for Changing Thumbnail -->
-    <div class="modal fade" id="thumbnailModalEdit" tabindex="-1" aria-labelledby="thumbnailModalEditLabel" aria-hidden="true">
+    <div class="modal fade" id="thumbnailModalEdit" tabindex="-1" aria-labelledby="thumbnailModalEditLabel"
+        aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -188,8 +210,10 @@
                     <form id="changeThumbnailForm">
                         <div class="mb-3">
                             <label for="projectThumbnailEdit" class="form-label">Project Thumbnail</label>
-                            <input type="file" class="form-control" id="projectThumbnailEdit" accept="image/*" style="background-color: #ffffff !important; color: #000000 !important; border: 2px solid #dee2e6 !important;">
-                            <small class="text-muted d-block mt-2">Supported formats: JPEG, PNG, GIF, WebP. Max size: 5MB.</small>
+                            <input type="file" class="form-control" id="projectThumbnailEdit" accept="image/*"
+                                style="background-color: #ffffff !important; color: #000000 !important; border: 2px solid #dee2e6 !important;">
+                            <small class="text-muted d-block mt-2">Supported formats: JPEG, PNG, GIF, WebP. Max size:
+                                5MB.</small>
                             <div id="thumbnailPreviewEdit" class="mt-2"></div>
                         </div>
                         <input type="hidden" id="editingThumbnailProjectId">
@@ -208,14 +232,14 @@
     <script>
         let userEmail = '';
         let username = '';
-        
+
         // Initialize modal instances
         const renameProjectModal = new bootstrap.Modal(document.getElementById('renameProjectModal'));
         const thumbnailModalEdit = new bootstrap.Modal(document.getElementById('thumbnailModalEdit'));
-        
+
         // Handle navbar Projects link
         document.querySelectorAll('a[href="#projects-section"]').forEach(link => {
-            link.addEventListener('click', function(e) {
+            link.addEventListener('click', function (e) {
                 e.preventDefault();
                 const projectsSection = document.getElementById('projects-section');
                 if (projectsSection) {
@@ -223,50 +247,81 @@
                 }
             });
         });
-        
+
+        // Handle View Projects button
+        document.getElementById('viewProjectsBtn').addEventListener('click', function () {
+            loadProjects();
+        });
+
         // Handle header Create New Project button
         let headerCreateProjectBtn = null;
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             headerCreateProjectBtn = document.getElementById('headerCreateProjectBtn');
             if (headerCreateProjectBtn) {
-                headerCreateProjectBtn.addEventListener('click', function() {
+                headerCreateProjectBtn.addEventListener('click', function () {
                     createNewProjectAndNavigate();
                 });
             }
         });
-        
+
         // Check if user is logged in
-        window.addEventListener('load', function() {
+        window.addEventListener('load', function () {
             checkLoginStatus();
-            loadProjects();
         });
 
         function checkLoginStatus() {
-            const userSession = localStorage.getItem('userSession');
-            if (!userSession) {
-                // User belum login, redirect ke login page
-                window.location.href = 'pages/login.html';
-                return;
-            }
-            
-            try {
-                const user = JSON.parse(userSession);
-                userEmail = user.email;
-                username = user.username;
-                
-                // Update welcome message
-                document.getElementById('welcomeTitle').textContent = `Hello, ${username}`;
-            } catch (e) {
-                localStorage.removeItem('userSession');
-                window.location.href = 'pages/login.html';
-            }
-            
-            // Add logout functionality
-            document.getElementById('logoutLink').addEventListener('click', function(e) {
-                e.preventDefault();
-                localStorage.removeItem('userSession');
-                window.location.href = 'pages/login.html';
-            });
+            // Check login status from server instead of localStorage
+            fetch('php/auth.php?action=check_login')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.logged_in) {
+                        // Update local variables
+                        userEmail = data.user.email;
+                        username = data.user.username;
+
+                        // Store in localStorage to maintain consistency with form-based login
+                        localStorage.setItem('userSession', JSON.stringify({
+                            email: data.user.email,
+                            username: data.user.username
+                        }));
+
+                        // Update welcome message
+                        document.getElementById('welcomeTitle').textContent = `Hello, ${username}`;
+
+                        // Add logout functionality
+                        document.getElementById('logoutLink').addEventListener('click', function (e) {
+                            e.preventDefault();
+                            logout();
+                        });
+
+                        // Load projects after login is confirmed
+                        loadProjects();
+                    } else {
+                        // User not logged in, redirect to login page
+                        window.location.href = 'pages/login.html';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error checking login status:', error);
+                    // If there's an error checking login status, redirect to login page
+                    window.location.href = 'pages/login.html';
+                });
+        }
+
+        // Function to handle logout
+        function logout() {
+            fetch('php/logout.php', {
+                method: 'POST'
+            })
+                .then(response => {
+                    localStorage.removeItem('userSession');
+                    window.location.href = 'pages/login.html';
+                })
+                .catch(error => {
+                    console.error('Error during logout:', error);
+                    localStorage.removeItem('userSession');
+                    window.location.href = 'pages/login.html';
+                });
         }
 
         // Load projects from database
@@ -274,7 +329,7 @@
             try {
                 const response = await fetch(`php/projects.php?action=getProjects&email=${encodeURIComponent(userEmail)}`);
                 const data = await response.json();
-                
+
                 if (data.success) {
                     renderProjects(data.projects);
                 } else {
@@ -290,83 +345,87 @@
 
         // Function to render projects
         function renderProjects(dbProjects = []) {
-            const projectsContainer = document.querySelector('.row');
-            
-            // Get the create new project card element to preserve it
-            const createNewCard = document.querySelector('.create-new-project')?.parentElement;
-            
-            // Clear the container but keep structure
-            const cardElements = projectsContainer.querySelectorAll('.col-md-3');
-            cardElements.forEach(el => el.remove());
-            
-            // Render all projects from database
-            dbProjects.forEach((project, index) => {
-                const projectCard = document.createElement('div');
-                projectCard.className = 'col-md-3 col-sm-6 mb-4';
-                
-                const createdDate = new Date(project.created_at).toLocaleDateString('id-ID', {
-                    year: 'numeric',
-                    month: 'short',
-                    day: 'numeric'
-                });
-                
-                // Determine what to display in the project icon
-                let iconHtml = '';
-                if (project.thumbnail) {
-                    iconHtml = `<img src="${escapeHtml(project.thumbnail)}" alt="${escapeHtml(project.title)}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">`;
-                } else {
-                    iconHtml = '<i class="fas fa-gamepad"></i>';
-                }
-                
-                projectCard.innerHTML = `
-                    <div class="project-card" data-project-id="${project.id}" style="position: relative;">
-                        <div class="project-icon">
-                            ${iconHtml}
-                        </div>
-                        <div class="project-actions" style="position: absolute; top: 10px; right: 10px; display: flex; gap: 8px;">
-                            <button class="btn btn-sm btn-light" title="Rename" onclick="showRenameModal(${project.id}, '${escapeHtml(project.title).replace(/'/g, "\\'")}', '${escapeHtml(project.description).replace(/'/g, "\\'")}')"><i class="fas fa-edit"></i></button>
-                            <button class="btn btn-sm btn-light" title="Change Thumbnail" onclick="showThumbnailModal(${project.id})"><i class="fas fa-image"></i></button>
-                            <button class="btn btn-sm btn-light" title="Delete" onclick="deleteProject(${project.id})" style="color: #dc3545;"><i class="fas fa-trash-alt"></i></button>
-                        </div>
-                        <h3 class="project-title">${escapeHtml(project.title)}</h3>
-                        <p class="project-desc">${escapeHtml(project.description)}</p>
-                        <div class="project-meta">
-                            <span>Created: ${createdDate}</span>
-                        </div>
-                    </div>
-                `;
-                projectsContainer.appendChild(projectCard);
-                
-                // Add click handler to edit project
-                projectCard.querySelector('.project-card').addEventListener('click', function(e) {
-                    if (!e.target.closest('.project-actions')) {
-                        window.location.href = 'pages/edit-project.html?id=' + project.id;
+            const projectsContainer = document.getElementById('projects-container');
+
+            // First, get the create new project card and remove it temporarily
+            const createNewCard = projectsContainer.querySelector('.create-new-project').closest('.col-md-3');
+            if (createNewCard) {
+                createNewCard.remove();
+            }
+
+            // Clear only the user projects, keep the example projects and container structure
+            const userProjectCards = projectsContainer.querySelectorAll('.user-project');
+            userProjectCards.forEach(card => card.remove());
+
+            // If user has projects, hide the example projects
+            if (dbProjects.length > 0) {
+                // Hide example projects
+                const exampleProjects = projectsContainer.querySelectorAll('.example-project');
+                exampleProjects.forEach(el => el.style.display = 'none');
+
+                // Render all projects from database
+                dbProjects.forEach((project, index) => {
+                    const projectCard = document.createElement('div');
+                    projectCard.className = 'col-md-3 col-sm-6 mb-4 user-project';
+
+                    const createdDate = new Date(project.created_at).toLocaleDateString('id-ID', {
+                        year: 'numeric',
+                        month: 'short',
+                        day: 'numeric'
+                    });
+
+                    // Determine what to display in the project icon
+                    let iconHtml = '';
+                    if (project.thumbnail) {
+                        iconHtml = `<img src="${escapeHtml(project.thumbnail)}" alt="${escapeHtml(project.title)}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">`;
+                    } else {
+                        iconHtml = '<i class="fas fa-gamepad"></i>';
                     }
+
+                    projectCard.innerHTML = `
+                        <div class="project-card" data-project-id="${project.id}" style="position: relative;">
+                            <div class="project-icon">
+                                ${iconHtml}
+                            </div>
+                            <div class="project-actions" style="position: absolute; top: 10px; right: 10px; display: flex; gap: 8px;">
+                                <button class="btn btn-sm btn-light" title="Rename" onclick="showRenameModal(${project.id}, '${escapeHtml(project.title).replace(/'/g, "\\'")}', '${escapeHtml(project.description).replace(/'/g, "\\'")}')"><i class="fas fa-edit"></i></button>
+                                <button class="btn btn-sm btn-light" title="Change Thumbnail" onclick="showThumbnailModal(${project.id})"><i class="fas fa-image"></i></button>
+                                <button class="btn btn-sm btn-light" title="Delete" onclick="deleteProject(${project.id})" style="color: #dc3545;"><i class="fas fa-trash-alt"></i></button>
+                            </div>
+                            <h3 class="project-title">${escapeHtml(project.title)}</h3>
+                            <p class="project-desc">${escapeHtml(project.description)}</p>
+                            <div class="project-meta">
+                                <span>Created: ${createdDate}</span>
+                            </div>
+                        </div>
+                    `;
+                    projectsContainer.appendChild(projectCard);
+
+                    // Add click handler to edit project
+                    projectCard.querySelector('.project-card').addEventListener('click', function (e) {
+                        if (!e.target.closest('.project-actions')) {
+                            window.location.href = 'pages/edit-project.html?id=' + project.id;
+                        }
+                    });
                 });
-            });
-            
-            // Add create new project card at the end
+            } else {
+                // Show example projects when user has no projects
+                const exampleProjects = projectsContainer.querySelectorAll('.example-project');
+                exampleProjects.forEach(el => el.style.display = '');
+            }
+
+            // Finally, add the create new project card at the end
             if (createNewCard) {
                 projectsContainer.appendChild(createNewCard);
-            } else {
-                const newCardContainer = document.createElement('div');
-                newCardContainer.className = 'col-md-3 col-sm-6 mb-4';
-                newCardContainer.innerHTML = `
-                    <div class="create-new-project">
-                        <i class="fas fa-plus"></i>
-                        <div class="create-new-project-text">Create New Project</div>
-                    </div>
-                `;
-                projectsContainer.appendChild(newCardContainer);
             }
-            
+
             attachCreateProjectHandlers();
         }
 
         // Function to attach event handlers to project cards
         function attachCreateProjectHandlers() {
             document.querySelectorAll('.create-new-project').forEach(card => {
-                card.addEventListener('click', function() {
+                card.addEventListener('click', function () {
                     const createProjectModal = new bootstrap.Modal(document.getElementById('createProjectModal'));
                     createProjectModal.show();
                 });
@@ -377,14 +436,14 @@
         const createProjectModal = new bootstrap.Modal(document.getElementById('createProjectModal'));
 
         // Handle thumbnail preview
-        document.getElementById('projectThumbnail').addEventListener('change', function(e) {
+        document.getElementById('projectThumbnail').addEventListener('change', function (e) {
             const file = e.target.files[0];
             const previewContainer = document.getElementById('thumbnailPreview');
             previewContainer.innerHTML = '';
-            
+
             if (file) {
                 const reader = new FileReader();
-                reader.onload = function(event) {
+                reader.onload = function (event) {
                     previewContainer.innerHTML = `
                         <div style="position: relative; width: 100%; max-width: 200px;">
                             <img src="${event.target.result}" alt="Preview" style="width: 100%; height: 150px; object-fit: cover; border-radius: 8px; border: 2px solid #dee2e6;">
@@ -397,14 +456,14 @@
         });
 
         // Handle thumbnail preview for edit modal
-        document.getElementById('projectThumbnailEdit').addEventListener('change', function(e) {
+        document.getElementById('projectThumbnailEdit').addEventListener('change', function (e) {
             const file = e.target.files[0];
             const previewContainer = document.getElementById('thumbnailPreviewEdit');
             previewContainer.innerHTML = '';
-            
+
             if (file) {
                 const reader = new FileReader();
-                reader.onload = function(event) {
+                reader.onload = function (event) {
                     previewContainer.innerHTML = `
                         <div style="position: relative; width: 100%; max-width: 200px;">
                             <img src="${event.target.result}" alt="Preview" style="width: 100%; height: 150px; object-fit: cover; border-radius: 8px; border: 2px solid #dee2e6;">
@@ -417,7 +476,7 @@
         });
 
         // Handle modal close events
-        document.getElementById('createProjectModal').addEventListener('hidden.bs.modal', function() {
+        document.getElementById('createProjectModal').addEventListener('hidden.bs.modal', function () {
             // Remove all backdrops
             document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
             // Enable body scrolling
@@ -425,13 +484,13 @@
             document.body.classList.remove('modal-open');
         });
 
-        document.getElementById('renameProjectModal').addEventListener('hidden.bs.modal', function() {
+        document.getElementById('renameProjectModal').addEventListener('hidden.bs.modal', function () {
             document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
             document.body.style.overflow = 'auto';
             document.body.classList.remove('modal-open');
         });
 
-        document.getElementById('thumbnailModalEdit').addEventListener('hidden.bs.modal', function() {
+        document.getElementById('thumbnailModalEdit').addEventListener('hidden.bs.modal', function () {
             document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
             document.body.style.overflow = 'auto';
             document.body.classList.remove('modal-open');
@@ -446,14 +505,14 @@
         }
 
         // Save rename
-        document.getElementById('saveRenameBtn').addEventListener('click', async function() {
+        document.getElementById('saveRenameBtn').addEventListener('click', async function () {
             const form = document.getElementById('renameProjectForm');
-            
+
             if (form.checkValidity()) {
                 const projectId = document.getElementById('editingProjectId').value;
                 const title = document.getElementById('editProjectTitle').value;
                 const description = document.getElementById('editProjectDescription').value;
-                
+
                 try {
                     const formData = new FormData();
                     formData.append('action', 'updateProject');
@@ -461,14 +520,14 @@
                     formData.append('project_id', projectId);
                     formData.append('title', title);
                     formData.append('description', description);
-                    
+
                     const response = await fetch('php/projects.php', {
                         method: 'POST',
                         body: formData
                     });
-                    
+
                     const data = await response.json();
-                    
+
                     if (data.success) {
                         loadProjects();
                         renameProjectModal.hide();
@@ -492,29 +551,29 @@
         }
 
         // Save thumbnail
-        document.getElementById('saveThumbnailBtn').addEventListener('click', async function() {
+        document.getElementById('saveThumbnailBtn').addEventListener('click', async function () {
             const projectId = document.getElementById('editingThumbnailProjectId').value;
             const thumbnailInput = document.getElementById('projectThumbnailEdit');
-            
+
             if (!thumbnailInput.files || !thumbnailInput.files[0]) {
                 alert('Please select an image file');
                 return;
             }
-            
+
             try {
                 const formData = new FormData();
                 formData.append('action', 'updateProject');
                 formData.append('email', userEmail);
                 formData.append('project_id', projectId);
                 formData.append('thumbnail', thumbnailInput.files[0]);
-                
+
                 const response = await fetch('php/projects.php', {
                     method: 'POST',
                     body: formData
                 });
-                
+
                 const data = await response.json();
-                
+
                 if (data.success) {
                     loadProjects();
                     thumbnailModalEdit.hide();
@@ -527,7 +586,7 @@
         });
 
         // Handle modal close events
-        document.getElementById('createProjectModal').addEventListener('hidden.bs.modal', function() {
+        document.getElementById('createProjectModal').addEventListener('hidden.bs.modal', function () {
             // Remove all backdrops
             document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
             // Enable body scrolling
@@ -535,38 +594,40 @@
             document.body.classList.remove('modal-open');
         });
 
-        // Save project button click
-        document.getElementById('saveProjectBtn').addEventListener('click', async function() {
+
+
+        // Event listener for Create Project button
+        document.getElementById('createProjectBtn').addEventListener('click', async function () {
             const form = document.getElementById('createProjectForm');
-            
+
             if (form.checkValidity()) {
                 const title = document.getElementById('projectTitle').value;
                 const description = document.getElementById('projectDescription').value;
                 const thumbnailInput = document.getElementById('projectThumbnail');
-                
+
                 try {
                     const formData = new FormData();
                     formData.append('action', 'createProject');
                     formData.append('email', userEmail);
                     formData.append('title', title);
                     formData.append('description', description);
-                    
+
                     // Add image file if selected
                     if (thumbnailInput.files && thumbnailInput.files[0]) {
                         formData.append('thumbnail', thumbnailInput.files[0]);
                     }
-                    
+
                     const response = await fetch('php/projects.php', {
                         method: 'POST',
                         body: formData
                     });
-                    
+
                     const data = await response.json();
-                    
+
                     if (data.success) {
-                        // Reload projects
+                        // Reload projects to show the new one
                         loadProjects();
-                        
+
                         // Close modal and reset form
                         createProjectModal.hide();
                         form.reset();
@@ -586,20 +647,20 @@
             if (!confirm('Are you sure you want to delete this project?')) {
                 return;
             }
-            
+
             try {
                 const formData = new FormData();
                 formData.append('action', 'deleteProject');
                 formData.append('email', userEmail);
                 formData.append('project_id', projectId);
-                
+
                 const response = await fetch('php/projects.php', {
                     method: 'POST',
                     body: formData
                 });
-                
+
                 const data = await response.json();
-                
+
                 if (data.success) {
                     loadProjects();
                 } else {
@@ -610,34 +671,10 @@
             }
         }
 
-        async function createNewProjectAndNavigate() {
-            // Create a temporary project
-            const defaultTitle = `New Project ${new Date().getTime()}`;
-            const defaultDescription = 'Click to edit this project';
-            
-            try {
-                const formData = new FormData();
-                formData.append('action', 'createProject');
-                formData.append('email', userEmail);
-                formData.append('title', defaultTitle);
-                formData.append('description', defaultDescription);
-                
-                const response = await fetch('php/projects.php', {
-                    method: 'POST',
-                    body: formData
-                });
-                
-                const data = await response.json();
-                
-                if (data.success) {
-                    // Navigate to edit-project page with project ID
-                    window.location.href = `pages/edit-project.html?id=${data.project_id}`;
-                } else {
-                    alert('Error: ' + data.message);
-                }
-            } catch (error) {
-                alert('Error creating project: ' + error.message);
-            }
+        function createNewProjectAndNavigate() {
+            // Open the same modal as the create new project button at the bottom
+            const createProjectModal = new bootstrap.Modal(document.getElementById('createProjectModal'));
+            createProjectModal.show();
         }
 
         function escapeHtml(text) {
@@ -655,4 +692,5 @@
         attachCreateProjectHandlers();
     </script>
 </body>
+
 </html>

@@ -28,9 +28,6 @@
                         <a class="nav-link" href="edit-project.html">Projects</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="membership.html">Membership</a>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link" href="profile.html">Profile</a>
                     </li>
                     <li class="nav-item">
@@ -71,6 +68,17 @@
                                 </div>
                                 <button type="submit" class="btn btn-primary w-100">Login</button>
                             </form>
+
+                            <div class="d-flex align-items-center my-3">
+                                <div class="flex-grow-1" style="border-top: 1px solid #333;"></div>
+                                <span class="mx-3 text-muted">OR</span>
+                                <div class="flex-grow-1" style="border-top: 1px solid #333;"></div>
+                            </div>
+
+                            <button type="button" class="btn btn-danger w-100 mb-3" id="googleLoginBtn">
+                                <i class="fab fa-google me-2"></i>Login with Google
+                            </button>
+
                             <div class="register-link">
                                 Don't have an account? <a href="signup.html">Sign Up here</a>
                             </div>
@@ -91,11 +99,27 @@
         });
 
         function checkLoginStatus() {
-            const userSession = localStorage.getItem('userSession');
-            if (userSession) {
-                // User sudah login, redirect ke index
-                window.location.href = '../index.html';
-            }
+            // Check login status from server instead of just localStorage
+            fetch('../php/auth.php?action=check_login')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success && data.logged_in) {
+                        // User is logged in via server, store in localStorage and redirect to index
+                        localStorage.setItem('userSession', JSON.stringify({
+                            email: data.user.email,
+                            username: data.user.username,
+                            rememberMe: false,
+                            loginTime: new Date().getTime()
+                        }));
+                        window.location.href = '../index.html';
+                    }
+                    // If not logged in, we stay on login page
+                })
+                .catch(error => {
+                    console.error('Error checking login status:', error);
+                    // If there's an error, we can assume user is not logged in
+                    // and will stay on login page
+                });
         }
 
         document.getElementById('loginForm').addEventListener('submit', async function(e) {
@@ -172,6 +196,41 @@
             `;
             alertContainer.appendChild(alert);
         }
+
+        // Function to handle logout globally
+        function logout() {
+            fetch('../php/logout.php', {
+                method: 'POST'
+            })
+            .then(response => {
+                localStorage.removeItem('userSession');
+                window.location.href = 'login.html';
+            })
+            .catch(error => {
+                console.error('Error during logout:', error);
+                localStorage.removeItem('userSession');
+                window.location.href = 'login.html';
+            });
+        }
+
+        // Google Login
+        document.getElementById('googleLoginBtn').addEventListener('click', function() {
+            console.log('Google login button clicked');
+            // Direct form submission to initiate Google OAuth (redirect)
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = '../php/auth.php';
+
+            const actionInput = document.createElement('input');
+            actionInput.type = 'hidden';
+            actionInput.name = 'action';
+            actionInput.value = 'google_login';
+
+            form.appendChild(actionInput);
+            document.body.appendChild(form);
+            console.log('Submitting form to initiate Google OAuth');
+            form.submit();
+        });
     </script>
 </body>
 </html>

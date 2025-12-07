@@ -38,6 +38,7 @@ try {
             user_id INT NOT NULL,
             title VARCHAR(255) NOT NULL,
             description TEXT,
+            thumbnail VARCHAR(500),
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             last_opened TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
             FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
@@ -51,6 +52,34 @@ try {
             category ENUM('character', 'environment', 'ui', 'item') DEFAULT 'character',
             description TEXT,
             uploaded_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (project_id) REFERENCES projects(id) ON DELETE CASCADE
+        )",
+
+        "CREATE TABLE IF NOT EXISTS characters (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            project_id INT NOT NULL,
+            name VARCHAR(255) NOT NULL,
+            hp INT DEFAULT 100,
+            attack INT DEFAULT 50,
+            speed INT DEFAULT 50,
+            image_id INT,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+            FOREIGN KEY (project_id) REFERENCES projects(id) ON DELETE CASCADE,
+            FOREIGN KEY (image_id) REFERENCES assets(id) ON DELETE SET NULL
+        )",
+
+        "CREATE TABLE IF NOT EXISTS story_nodes (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            project_id INT NOT NULL,
+            dom_id VARCHAR(50),
+            title VARCHAR(255) NOT NULL,
+            content TEXT,
+            position_x INT DEFAULT 0,
+            position_y INT DEFAULT 0,
+            connections JSON,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
             FOREIGN KEY (project_id) REFERENCES projects(id) ON DELETE CASCADE
         )"
     ];

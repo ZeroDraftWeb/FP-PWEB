@@ -27,14 +27,15 @@
                     <li class="nav-item">
                         <a class="nav-link" href="edit-project.html">Projects</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="membership.html">Membership</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="profile.html">Profile</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="login.html">Login</a>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Account
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="profile.html">Profile</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="login.html">Login</a></li>
+                        </ul>
                     </li>
                 </ul>
             </div>
@@ -79,6 +80,17 @@
                                 </div>
                                 <button type="submit" class="btn btn-primary w-100">Sign Up</button>
                             </form>
+
+                            <div class="d-flex align-items-center my-3">
+                                <div class="flex-grow-1" style="border-top: 1px solid #333;"></div>
+                                <span class="mx-3 text-muted">OR</span>
+                                <div class="flex-grow-1" style="border-top: 1px solid #333;"></div>
+                            </div>
+
+                            <button type="button" class="btn btn-danger w-100 mb-3" id="googleSignupBtn">
+                                <i class="fab fa-google me-2"></i>Sign Up with Google
+                            </button>
+
                             <div class="register-link">
                                 Already have an account? <a href="login.html">Login here</a>
                             </div>
@@ -178,6 +190,23 @@
             `;
             alertContainer.appendChild(alert);
         }
+
+        // Google Signup
+        document.getElementById('googleSignupBtn').addEventListener('click', function() {
+            // Direct form submission to initiate Google OAuth (redirect)
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = '../php/auth.php';
+
+            const actionInput = document.createElement('input');
+            actionInput.type = 'hidden';
+            actionInput.name = 'action';
+            actionInput.value = 'google_login';
+
+            form.appendChild(actionInput);
+            document.body.appendChild(form);
+            form.submit();
+        });
     </script>
 </body>
 </html>

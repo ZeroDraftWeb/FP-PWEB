@@ -1,20 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Project - BOLOBOX</title>
+    <title>Edit Project - ZeroDraft</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="../css/style.css">
+    <!-- PDF Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </head>
+
 <body>
+
     <!-- Navigation Bar -->
-    <nav class="navbar navbar-expand-lg navbar-dark">
-        <div class="container">
-            <a class="navbar-brand" href="../index.html">
-                <i class="fas fa-file-alt me-2"></i>BOLOBOX
+    <nav class="navbar navbar-expand-lg navbar-dark bg-transparent pt-4 pb-4">
+        <div class="container-fluid px-5">
+            <a class="navbar-brand fw-bold fs-4" href="../index.html">
+                <i class="fas fa-file-alt me-2"></i>ZeroDraft
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
@@ -27,14 +32,18 @@
                     <li class="nav-item">
                         <a class="nav-link active" href="edit-project.html">Projects</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="membership.html">Membership</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="profile.html">Profile</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="login.html">Logout</a>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            Account
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="profile.html">Profile</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="login.html">Logout</a></li>
+                        </ul>
                     </li>
                 </ul>
             </div>
@@ -42,149 +51,138 @@
     </nav>
 
     <!-- Main Content -->
-    <div class="container-fluid">
+    <div class="container-fluid px-5">
         <!-- Edit Project Page -->
-        <div id="edit-project-page" class="row mt-4">
+        <div id="edit-project-page" class="row">
             <div class="col-12">
-                <div class="d-flex justify-content-between align-items-center mb-4">
+                <div class="mb-5 d-flex justify-content-between align-items-end">
                     <div>
-                        <h1 class="section-title">Cyber-Knight</h1>
-                        <p class="section-subtitle">Manage your game assets, story, and mechanics all in one place.</p>
+                        <h1 class="display-4 fw-bold text-white mb-2" id="projectTitle"
+                            style="text-transform: uppercase;">Loading...</h1>
+                        <p class="text-secondary mb-0" id="projectDescription">Manage your game assets, story, and
+                            mechanics all in one place.</p>
                     </div>
-                    <div class="action-buttons">
-                        <button class="btn btn-save">Save Project</button>
-                        <button class="btn btn-export">Export as PDF</button>
-                        <button class="btn btn-settings">Settings</button>
-                        <button class="btn btn-profile">Profile</button>
+                    <div class="d-flex gap-3 align-items-center pb-2">
+                        <button class="btn btn-link text-white text-decoration-none fw-bold btn-save">Save
+                            Project</button>
+                        <button class="btn btn-secondary rounded-pill px-4 btn-export">Export as PDF</button>
+                        <button class="btn btn-icon text-white fs-5 btn-settings"><i class="fas fa-cog"></i></button>
+                        <button class="btn btn-icon text-white fs-5 btn-profile"><i class="fas fa-user"></i></button>
                     </div>
                 </div>
 
                 <!-- Asset Gallery Section -->
-                <div class="card mb-4">
-                    <div class="card-header d-flex justify-content-between align-items-center">
-                        <h3>Asset Gallery</h3>
-                        <button class="upload-btn">
-                            <i class="fas fa-upload"></i> Upload New Asset
+                <div class="mb-5">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h3 class="fw-bold text-white">Asset Gallery</h3>
+                        <button class="upload-btn btn btn-link text-white text-decoration-none">
+                            <i class="fas fa-upload me-2"></i> Upload New Asset
                         </button>
                     </div>
-                    <div class="card-body">
-                        <div class="asset-gallery">
-                            <div class="asset-item">
-                                <img src="https://placehold.co/200x200/333333/ffffff?text=Main+Hero" alt="Main Hero">
-                                <div class="asset-info">
-                                    <div class="asset-title">Main Hero</div>
-                                    <div class="asset-filename">main_hero.png</div>
-                                </div>
-                            </div>
-
-                            <div class="asset-item">
-                                <img src="https://placehold.co/200x200/333333/ffffff?text=Villain" alt="Villain">
-                                <div class="asset-info">
-                                    <div class="asset-title">Villain</div>
-                                    <div class="asset-filename">villain.png</div>
-                                </div>
-                            </div>
-
-                            <div class="asset-item">
-                                <img src="https://placehold.co/200x200/333333/ffffff?text=Side+Char" alt="Side Character">
-                                <div class="asset-info">
-                                    <div class="asset-title">Side Char</div>
-                                    <div class="asset-filename">side_char.png</div>
-                                </div>
-                            </div>
-
-                            <div class="asset-item">
-                                <img src="https://placehold.co/200x200/333333/ffffff?text=Statue" alt="Statue">
-                                <div class="asset-info">
-                                    <div class="asset-title">Statue</div>
-                                    <div class="asset-filename">statue.png</div>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="asset-gallery d-flex gap-3 overflow-auto pb-3">
+                        <!-- Assets will be injected here -->
                     </div>
                 </div>
 
                 <!-- Character Stat Builder Section -->
-                <div class="card mb-4">
-                    <div class="card-header">
-                        <h3>Character Stat Builder</h3>
-                    </div>
-                    <div class="card-body character-builder">
-                        <div class="character-form">
-                            <div class="character-info">
-                                <div class="mb-3">
-                                    <label for="characterName" class="form-label">Character Name</label>
-                                    <input type="text" class="form-control" id="characterName" value="Cyber-Knight">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="selectImage" class="form-label">Select Image</label>
-                                    <select class="form-select" id="selectImage">
-                                        <option value="main_hero.png">main_hero.png</option>
-                                        <option value="villain.png">villain.png</option>
-                                        <option value="side_char.png">side_char.png</option>
-                                        <option value="statue.png">statue.png</option>
-                                    </select>
-                                </div>
-                                <button class="save-character-btn">
-                                    <i class="fas fa-save"></i> Save Character
-                                </button>
-                            </div>
-
-                            <div class="character-stats">
-                                <div class="slider-container">
-                                    <label>HP: <span id="hpValue">120</span></label>
-                                    <input type="range" class="form-range" id="hpSlider" min="1" max="200" value="120">
+                <div class="mb-5">
+                    <h3 class="fw-bold text-white mb-3">Character Stat Builder</h3>
+                    <div class="card border-0" style="background-color: #1e2029; border-radius: 20px;">
+                        <div class="card-body p-4">
+                            <div class="row g-5">
+                                <!-- Left Column: Inputs -->
+                                <div class="col-md-5">
+                                    <div class="mb-4">
+                                        <label for="characterName"
+                                            class="form-label text-secondary fs-6 fw-bold">Character Name</label>
+                                        <input type="text"
+                                            class="form-control bg-secondary bg-opacity-25 border-0 text-white p-3"
+                                            id="characterName" value="Cyber-Knight" style="border-radius: 8px;">
+                                    </div>
+                                    <div class="mb-4">
+                                        <label for="selectImage" class="form-label text-secondary fs-6 fw-bold">Select
+                                            Image</label>
+                                        <select class="form-select bg-secondary bg-opacity-25 border-0 text-white p-3"
+                                            id="selectImage" style="border-radius: 8px;">
+                                            <option value="main_hero.png">main_hero.png</option>
+                                        </select>
+                                    </div>
+                                    <button class="save-character-btn btn w-100 py-3 mt-2 fw-bold text-white"
+                                        style="background-color: #2b2d36; border-radius: 10px;">
+                                        <i class="fas fa-save me-2"></i> Save Character
+                                    </button>
                                 </div>
 
-                                <div class="slider-container">
-                                    <label>Attack: <span id="attackValue">45</span></label>
-                                    <input type="range" class="form-range" id="attackSlider" min="1" max="100" value="45">
-                                </div>
-
-                                <div class="slider-container">
-                                    <label>Speed: <span id="speedValue">80</span></label>
-                                    <input type="range" class="form-range" id="speedSlider" min="1" max="100" value="80">
+                                <!-- Right Column: Sliders -->
+                                <div class="col-md-7 d-flex flex-column justify-content-center gap-4">
+                                    <div class="slider-group">
+                                        <label class="text-secondary mb-2 d-block">HP: <span id="hpValue"
+                                                class="text-white">120</span></label>
+                                        <input type="range" class="form-range custom-range" id="hpSlider" min="1"
+                                            max="200" value="120">
+                                    </div>
+                                    <div class="slider-group">
+                                        <label class="text-secondary mb-2 d-block">Attack: <span id="attackValue"
+                                                class="text-white">45</span></label>
+                                        <input type="range" class="form-range custom-range" id="attackSlider" min="1"
+                                            max="100" value="45">
+                                    </div>
+                                    <div class="slider-group">
+                                        <label class="text-secondary mb-2 d-block">Speed: <span id="speedValue"
+                                                class="text-white">80</span></label>
+                                        <input type="range" class="form-range custom-range" id="speedSlider" min="1"
+                                            max="100" value="80">
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Interactive Storyline Section -->
-                <div class="card">
-                    <div class="card-header d-flex justify-content-between align-items-center">
-                        <h3>Interactive Storyline</h3>
-                        <p class="mb-0">Make your own storyline here</p>
+                <div class="mb-5">
+                    <h3 class="fw-bold text-white mb-3">Saved Characters</h3>
+                    <div id="saved-characters-container" class="d-flex gap-3 overflow-auto pb-3"
+                        style="min-height: 100px;">
+                        <!-- Character cards will be injected here -->
+                        <div class="text-muted fst-italic">No characters saved yet. Create one above!</div>
                     </div>
-                    <div class="card-body">
-                        <div class="story-editor">
-                            <div class="story-toolbar">
-                                <button><i class="fas fa-plus"></i> Add Node</button>
-                                <button><i class="fas fa-link"></i> Connect Nodes</button>
-                                <button><i class="fas fa-search-plus"></i> Zoom In</button>
-                                <button><i class="fas fa-search-minus"></i> Zoom Out</button>
+                </div>
+
+                <!-- Interactive Storyline Section -->
+                <div class="mb-5">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h3 class="fw-bold text-white mb-0">Interactive Storyline</h3>
+                        <p class="text-secondary mb-0">Make your own storyline here</p>
+                    </div>
+                    <div class="card border-0"
+                        style="background-color: #1e2029; border-radius: 20px; overflow: hidden;">
+                        <div class="card-body p-0 position-relative">
+                            <!-- Toolbar (Floating Top Right) -->
+                            <div class="story-toolbar position-absolute top-0 end-0 m-3 d-flex gap-2"
+                                style="background: rgba(30, 32, 41, 0.8); backdrop-filter: blur(5px); border-radius: 50px; padding: 5px 15px; border: 1px solid rgba(255,255,255,0.1); z-index: 100;">
+                                <button class="btn btn-sm text-secondary hover-white" title="Add Node"><i
+                                        class="fas fa-plus"></i></button>
+                                <button class="btn btn-sm text-secondary hover-white" title="Connect Nodes"><i
+                                        class="fas fa-link"></i></button>
+                                <button class="btn btn-sm text-secondary hover-white" title="Save Story"
+                                    id="btnSaveStoryToolbar"><i class="fas fa-save"></i></button>
+                                <div class="vr bg-secondary mx-1"></div>
+                                <button class="btn btn-sm text-secondary hover-white" title="Zoom In"><i
+                                        class="fas fa-search-plus"></i></button>
+                                <button class="btn btn-sm text-secondary hover-white" title="Zoom Out"><i
+                                        class="fas fa-search-minus"></i></button>
                             </div>
-                            <div class="story-canvas">
-                                <!-- Story nodes will be dynamically created here -->
-                                <div class="story-node start" style="top: 200px; left: 100px;">
-                                    <strong>Start</strong>
-                                </div>
 
-                                <div class="story-node" style="top: 100px; left: 300px;">
-                                    <strong>Fight Goblin</strong>
-                                    <div style="font-size: 0.8rem;">Engage in combat.</div>
+                            <div class="story-canvas" style="height: 600px; background-color: #1e2029;">
+                                <div id="story-zoom-container"
+                                    style="transform-origin: 0 0; transition: transform 0.2s ease; width: 3000px; height: 3000px; position: relative;">
+                                    <!-- Connections between nodes -->
+                                    <svg width="100%" height="100%"
+                                        style="position: absolute; top: 0; left: 0; pointer-events: none; z-index: 0;">
+                                        <!-- Lines will be drawn here -->
+                                    </svg>
+                                    <!-- Story nodes will be dynamically created here -->
                                 </div>
-
-                                <div class="story-node" style="top: 300px; left: 300px;">
-                                    <strong>Sneak Past</strong>
-                                    <div style="font-size: 0.8rem;">Avoid confrontation.</div>
-                                </div>
-
-                                <!-- Connections between nodes -->
-                                <svg width="100%" height="100%" style="position: absolute; top: 0; left: 0; pointer-events: none;">
-                                    <line class="story-connection" x1="150" y1="200" x2="300" y2="100" />
-                                    <line class="story-connection" x1="150" y1="200" x2="300" y2="300" />
-                                </svg>
                             </div>
                         </div>
                     </div>
@@ -193,9 +191,49 @@
         </div>
     </div>
 
+    <!-- Edit Node Modal -->
+    <div class="modal fade" id="editNodeModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit Story Node</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="editNodeId">
+                    <div class="mb-3">
+                        <label for="editNodeTitle" class="form-label">Title</label>
+                        <input type="text" class="form-control" id="editNodeTitle">
+                    </div>
+                    <div class="mb-3">
+                        <label for="editNodeContent" class="form-label">Content</label>
+                        <textarea class="form-control" id="editNodeContent" rows="3"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-danger" id="btnDeleteNode">Delete Node</button>
+                    <button type="button" class="btn btn-primary" id="btnSaveNode">Save Changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Bootstrap 5 JS Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+        // Global Error Handler for Debugging
+        window.onerror = function (msg, url, line, col, error) {
+            // alert('JS Error: ' + msg + '\nLine: ' + line);
+            console.error('JS Error:', msg, error);
+            return false;
+        };
+
+        // Global state
+        let storyNodes = [];
+        let storyConnections = [];
+        let nextNodeId = 1;
+
         // Set up slider value updates
         const hpSlider = document.getElementById('hpSlider');
         const attackSlider = document.getElementById('attackSlider');
@@ -205,64 +243,1293 @@
         const attackValue = document.getElementById('attackValue');
         const speedValue = document.getElementById('speedValue');
 
-        hpSlider.addEventListener('input', function() {
-            hpValue.textContent = this.value;
+        hpSlider.addEventListener('input', function () { hpValue.textContent = this.value; });
+        attackSlider.addEventListener('input', function () { attackValue.textContent = this.value; });
+        speedSlider.addEventListener('input', function () { speedValue.textContent = this.value; });
+
+        // --- Asset Upload Feature ---
+        const uploadBtn = document.querySelector('.upload-btn');
+        // Create hidden file input
+        const fileInput = document.createElement('input');
+        fileInput.type = 'file';
+        fileInput.accept = 'image/*';
+        fileInput.style.display = 'none';
+        document.body.appendChild(fileInput);
+
+        uploadBtn.addEventListener('click', () => fileInput.click());
+
+        fileInput.addEventListener('change', async function (e) {
+            if (!this.files || !this.files[0]) return;
+
+            const formData = new FormData();
+            formData.append('action', 'uploadAsset');
+            formData.append('project_id', window.projectId);
+            formData.append('email', window.userEmail);
+            formData.append('file', this.files[0]);
+
+            try {
+                const response = await fetch('../php/projects.php', { method: 'POST', body: formData });
+                const data = await response.json();
+
+                if (data.success) {
+                    alert('Asset uploaded successfully!');
+                    // Append new asset to gallery
+                    addAssetToGallery(data.asset);
+                    // Add to dropdown
+                    addAssetToDropdown(data.asset);
+                } else {
+                    alert('Upload failed: ' + data.message);
+                }
+            } catch (error) {
+                console.error('Error uploading asset:', error);
+                alert('Error uploading asset');
+            }
+            // Reset input
+            this.value = '';
         });
 
-        attackSlider.addEventListener('input', function() {
-            attackValue.textContent = this.value;
+        function addAssetToGallery(asset) {
+            const gallery = document.querySelector('.asset-gallery');
+            const item = document.createElement('div');
+            item.className = 'asset-item';
+            item.style.position = 'relative';
+            item.dataset.assetId = asset.id;
+            item.innerHTML = `
+                <button class="btn-delete-asset" onclick="deleteAsset(${asset.id})" title="Delete Asset">
+                    <i class="fas fa-trash"></i>
+                </button>
+                <img src="../${asset.file_path}" alt="${asset.file_name}">
+                <div class="asset-info">
+                    <div class="asset-title">${asset.file_name.split('.')[0]}</div>
+                    <div class="asset-filename">${asset.file_name}</div>
+                </div>
+            `;
+            gallery.insertBefore(item, gallery.firstChild);
+        }
+
+        function addAssetToDropdown(asset) {
+            const select = document.getElementById('selectImage');
+            const option = document.createElement('option');
+            option.value = asset.id; // Use ID for value
+            option.textContent = asset.file_name;
+            select.appendChild(option);
+        }
+
+        // --- Delete Asset Feature ---
+        async function deleteAsset(assetId) {
+            if (!confirm('Are you sure you want to delete this asset? This action cannot be undone.')) {
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('action', 'deleteAsset');
+            formData.append('project_id', window.projectId);
+            formData.append('email', window.userEmail);
+            formData.append('asset_id', assetId);
+
+            try {
+                const response = await fetch('../php/projects.php', { method: 'POST', body: formData });
+                const data = await response.json();
+
+                if (data.success) {
+                    // Remove from gallery
+                    const assetItem = document.querySelector(`.asset-item[data-asset-id="${assetId}"]`);
+                    if (assetItem) {
+                        assetItem.remove();
+                    }
+
+                    // Remove from dropdown
+                    const select = document.getElementById('selectImage');
+                    const option = select.querySelector(`option[value="${assetId}"]`);
+                    if (option) {
+                        option.remove();
+                    }
+
+                    // Update window.projectAssets
+                    if (window.projectAssets) {
+                        window.projectAssets = window.projectAssets.filter(a => a.id != assetId);
+                    }
+
+                    alert('Asset deleted successfully!');
+                } else {
+                    alert('Delete failed: ' + data.message);
+                }
+            } catch (error) {
+                console.error('Error deleting asset:', error);
+                alert('Error deleting asset');
+            }
+        }
+
+        // --- Character Save Feature ---
+        async function saveCharacterState(silent = false) {
+            const name = document.getElementById('characterName').value;
+            const imageId = document.getElementById('selectImage').value;
+            const hp = hpSlider.value;
+            const attack = attackSlider.value;
+            const speed = speedSlider.value;
+
+            const formData = new FormData();
+            formData.append('action', 'saveCharacter');
+            formData.append('project_id', window.projectId);
+            formData.append('email', window.userEmail);
+            formData.append('name', name);
+            formData.append('hp', hp);
+            formData.append('attack', attack);
+            formData.append('speed', speed);
+            formData.append('image_id', imageId);
+
+            try {
+                const response = await fetch('../php/projects.php', { method: 'POST', body: formData });
+                const data = await response.json();
+
+                if (data.success) {
+                    if (!silent) alert('Character saved successfully!');
+                    // Refresh project data to show new character
+                    loadProjectData();
+                    return true;
+                } else {
+                    if (!silent) alert('Save failed: ' + data.message);
+                    return false;
+                }
+            } catch (error) {
+                console.error('Error saving character:', error);
+                if (!silent) alert('Error saving character');
+                return false;
+            }
+        }
+
+        document.querySelector('.save-character-btn').addEventListener('click', () => saveCharacterState(false));
+
+        // --- Interactive Storyline Feature ---
+        // State
+        // storyNodes and nextNodeId are global at the top
+
+        // Zoom functionality
+        let currentZoom = 1;
+        const zoomContainer = document.getElementById('story-zoom-container');
+
+        document.querySelector('.story-toolbar button:nth-child(5)').addEventListener('click', () => { // Zoom In
+            currentZoom = Math.min(currentZoom + 0.1, 2);
+            updateZoom();
         });
 
-        speedSlider.addEventListener('input', function() {
-            speedValue.textContent = this.value;
+        document.querySelector('.story-toolbar button:nth-child(6)').addEventListener('click', () => { // Zoom Out
+            currentZoom = Math.max(currentZoom - 0.1, 0.5);
+            updateZoom();
         });
 
-        // Upload asset button
-        document.querySelector('.upload-btn').addEventListener('click', function() {
-            alert('Upload functionality would open file selector here.');
+        function updateZoom() {
+            zoomContainer.style.transform = `scale(${currentZoom})`;
+        }
+
+        // Connect Mode State
+        let isConnectMode = false;
+        let connectSourceNode = null;
+        const connectBtn = document.querySelector('.story-toolbar button:nth-child(2)');
+
+        connectBtn.addEventListener('click', function () {
+            isConnectMode = !isConnectMode;
+            this.classList.toggle('active');
+            this.style.backgroundColor = isConnectMode ? '#2ecc71' : ''; // Visual feedback
+
+            // Reset selection if turning off
+            if (!isConnectMode) {
+                if (connectSourceNode) {
+                    connectSourceNode.classList.remove('node-selected');
+                    connectSourceNode = null;
+                }
+            }
         });
 
-        // Save character button
-        document.querySelector('.save-character-btn').addEventListener('click', function() {
-            alert('Character saved successfully!');
-        });
-
-        // Story node drag functionality (basic implementation)
+        // Basic Node Dragging
+        // Basic Node Dragging State
         let isDragging = false;
         let currentDragNode = null;
         let offsetX = 0;
         let offsetY = 0;
 
-        document.querySelectorAll('.story-node').forEach(node => {
-            node.addEventListener('mousedown', function(e) {
-                isDragging = true;
-                currentDragNode = this;
-                offsetX = e.clientX - this.offsetLeft;
-                offsetY = e.clientY - this.offsetTop;
-                this.style.zIndex = '10';
-            });
-        });
+        // Note: Actual dragging logic is handled by the corrected listener below to support zoom properly.
 
-        document.addEventListener('mousemove', function(e) {
-            if (isDragging && currentDragNode) {
-                currentDragNode.style.left = (e.clientX - offsetX) + 'px';
-                currentDragNode.style.top = (e.clientY - offsetY) + 'px';
-            }
-        });
 
-        document.addEventListener('mouseup', function() {
+        document.addEventListener('mouseup', function () {
             if (isDragging) {
                 isDragging = false;
                 if (currentDragNode) {
                     currentDragNode.style.zIndex = '1';
+                    // Update node position in data
+                    const nodeId = currentDragNode.dataset.id;
+                    const node = storyNodes.find(n => n.id == nodeId);
+                    if (node) {
+                        node.x = parseFloat(currentDragNode.style.left);
+                        node.y = parseFloat(currentDragNode.style.top);
+                    }
                     currentDragNode = null;
                 }
             }
         });
 
-        document.querySelector('.story-toolbar button:first-child').addEventListener('click', function() {
-            alert('Add node functionality would create a new node at the clicked position.');
+        // Node Interaction (Drag, Connect, Edit)
+        function makeNodeInteractive(nodeEl) {
+            // Drag Start
+            nodeEl.addEventListener('mousedown', function (e) {
+                if (isConnectMode) return; // Don't drag in connect mode
+
+                isDragging = true;
+                currentDragNode = this;
+
+                // Calculate offset considering zoom
+                // We need the mouse position relative to the element, enabling smooth dragging
+                // However, standard offsetLeft/Top works. The mousemove delta needs zoom info.
+                // Let's reset the simple offset calculation logic:
+                // We want: newLeft = currentMouseX - initialClickOffsetX
+
+                const rect = this.getBoundingClientRect();
+                // Store the distance from mouse pointer to the top-left of the element
+                offsetX = e.clientX - rect.left + (parseFloat(this.style.left) * currentZoom);
+                // Wait, that logic is getting complex with Zoom. 
+                // Simpler: offset = e.clientX (screen) - (this.left * zoom) (screen pos of left edge)?
+                // Actually, standard drag w/ zoom correction:
+
+                // Let's just fix the offset logic in mousemove, 
+                // here we just need a reference point.
+                // Revert to simple logic but corrected in move:
+                // We drag relative to the PARENT (zoomContainer).
+
+                // Correct approach for zoom dragging:
+                // 1. Get initial mouse pos
+                // 2. Get initial elem pos
+                // 3. In move, delta = (currMouse - initMouse) / zoom
+                // 4. newPos = initElem + delta
+
+                this.dragStartX = e.clientX;
+                this.dragStartY = e.clientY;
+                this.elemStartX = parseFloat(this.style.left) || 0;
+                this.elemStartY = parseFloat(this.style.top) || 0;
+
+                // Re-assign generic handlers to use these specific props
+                offsetX = this.dragStartX; // reusing var names differently
+                offsetY = this.dragStartY;
+
+                this.style.zIndex = '10';
+                e.stopPropagation(); // Prevent canvas drag if we add panning later
+            });
+
+            // Connect Mode Click
+            nodeEl.addEventListener('click', function (e) {
+                if (!isConnectMode) return;
+
+                // If no source selected, select this
+                if (!connectSourceNode) {
+                    connectSourceNode = this;
+                    this.classList.add('node-selected');
+                    // Add style for selection
+                    this.style.boxShadow = '0 0 0 3px #2ecc71';
+                } else {
+                    // Source already selected
+                    if (connectSourceNode === this) {
+                        // Deselect if clicking self
+                        this.classList.remove('node-selected');
+                        this.style.boxShadow = '';
+                        connectSourceNode = null;
+                        return;
+                    }
+
+                    // Connect source to this (target)
+                    const sourceId = connectSourceNode.dataset.id;
+                    const targetId = this.dataset.id;
+
+                    const sourceNode = storyNodes.find(n => n.id == sourceId);
+                    if (sourceNode) {
+                        if (!sourceNode.connections) sourceNode.connections = [];
+                        // Avoid duplicates
+                        if (!sourceNode.connections.includes(targetId)) {
+                            sourceNode.connections.push(targetId);
+                            updateConnections();
+                        }
+                    }
+
+                    // Reset selection
+                    connectSourceNode.classList.remove('node-selected');
+                    connectSourceNode.style.boxShadow = '';
+                    connectSourceNode = null;
+                }
+                e.stopPropagation();
+            });
+
+            // Edit Node (Double Click)
+            nodeEl.addEventListener('dblclick', function (e) {
+                const nodeId = this.dataset.id;
+                const node = storyNodes.find(n => n.id == nodeId);
+
+                if (node) {
+                    const modal = new bootstrap.Modal(document.getElementById('editNodeModal'));
+                    document.getElementById('editNodeId').value = nodeId;
+                    document.getElementById('editNodeTitle').value = node.title;
+                    document.getElementById('editNodeContent').value = node.content;
+                    modal.show();
+                }
+                e.stopPropagation();
+            });
+        }
+
+        // Corrected Drag Logic in Global Listener
+        document.addEventListener('mousemove', function (e) {
+            if (isDragging && currentDragNode) {
+                const deltaX = (e.clientX - offsetX) / currentZoom;
+                const deltaY = (e.clientY - offsetY) / currentZoom;
+
+                currentDragNode.style.left = (currentDragNode.elemStartX + deltaX) + 'px';
+                currentDragNode.style.top = (currentDragNode.elemStartY + deltaY) + 'px';
+
+                updateConnections();
+            }
+        });
+
+        // Add Node
+        document.querySelector('.story-toolbar button:first-child').addEventListener('click', function () {
+            // Find center of current view approx
+            createNode('New Node', 'Description', 100, 100);
+        });
+
+        function createNode(title, content, x, y, id = null, connections = []) {
+            // Generate a persistent ID if not provided.
+            // When loading from DB, 'id' will be the DB 'dom_id' (or we map it).
+            const nodeId = id || 'node_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+
+            const nodeEl = document.createElement('div');
+            nodeEl.className = 'story-node';
+            if (nodeId === 'node_start') nodeEl.classList.add('start'); // Keep start node logic if needed
+
+            nodeEl.style.left = x + 'px';
+            nodeEl.style.top = y + 'px';
+            nodeEl.dataset.id = nodeId;
+            nodeEl.innerHTML = `
+                <strong>${title}</strong>
+                <div class="node-content-preview" style="font-size: 0.8rem;">${content}</div>
+            `;
+
+            document.getElementById('story-zoom-container').appendChild(nodeEl);
+            makeNodeInteractive(nodeEl);
+
+            // Ensure node is in our data array
+            if (!storyNodes.find(n => n.id === nodeId)) {
+                storyNodes.push({
+                    id: nodeId,
+                    title: title,
+                    content: content,
+                    x: x,
+                    y: y,
+                    connections: connections
+                });
+            }
+            return nodeEl;
+        }
+
+        function updateConnections() {
+            const svg = document.querySelector('#story-zoom-container svg');
+            svg.innerHTML = ''; // Clear lines
+
+            // Add defs with arrow marker untuk project page
+            const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
+            const marker = document.createElementNS('http://www.w3.org/2000/svg', 'marker');
+            marker.setAttribute('id', 'arrowhead-project');
+            marker.setAttribute('markerWidth', '10');
+            marker.setAttribute('markerHeight', '10');
+            marker.setAttribute('refX', '9');
+            marker.setAttribute('refY', '3');
+            marker.setAttribute('orient', 'auto');
+            const arrowPath = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
+            arrowPath.setAttribute('points', '0 0, 10 3, 0 6');
+            arrowPath.setAttribute('fill', '#3b82f6');
+            marker.appendChild(arrowPath);
+            defs.appendChild(marker);
+            svg.appendChild(defs);
+
+            storyNodes.forEach(node => {
+                if (node.connections && node.connections.length > 0) {
+                    const sourceEl = document.querySelector(`.story-node[data-id="${node.id}"]`);
+                    if (!sourceEl) return;
+
+                    // Calculate center positions
+                    const w = sourceEl.offsetWidth;
+                    const h = sourceEl.offsetHeight;
+                    const x1 = parseFloat(sourceEl.style.left) + w / 2;
+                    const y1 = parseFloat(sourceEl.style.top) + h / 2;
+
+                    node.connections.forEach(targetId => {
+                        const targetEl = document.querySelector(`.story-node[data-id="${targetId}"]`);
+                        if (targetEl) {
+                            const tw = targetEl.offsetWidth;
+                            const th = targetEl.offsetHeight;
+                            const x2 = parseFloat(targetEl.style.left) + tw / 2;
+                            const y2 = parseFloat(targetEl.style.top) + th / 2;
+
+                            // Calculate direction vector
+                            const dx = x2 - x1;
+                            const dy = y2 - y1;
+                            const distance = Math.sqrt(dx * dx + dy * dy);
+                            const angle = Math.atan2(dy, dx);
+
+                            // Shorten line to not overlap with node boxes
+                            const nodeRadius = Math.max(w, h) / 2 + 5;
+                            const startX = x1 + nodeRadius * Math.cos(angle);
+                            const startY = y1 + nodeRadius * Math.sin(angle);
+                            const endX = x2 - nodeRadius * Math.cos(angle);
+                            const endY = y2 - nodeRadius * Math.sin(angle);
+
+                            // Draw dashed line with arrow marker
+                            const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+                            line.setAttribute('class', 'story-connection');
+                            line.setAttribute('x1', startX);
+                            line.setAttribute('y1', startY);
+                            line.setAttribute('x2', endX);
+                            line.setAttribute('y2', endY);
+                            line.setAttribute('stroke', '#3b82f6');
+                            line.setAttribute('stroke-width', '2.5');
+                            line.setAttribute('stroke-dasharray', '5,3');
+                            line.setAttribute('marker-end', 'url(#arrowhead-project)');
+                            svg.appendChild(line);
+
+                            // Draw arrow head manually for better visibility
+                            const arrowSize = 10;
+                            const arrowPoints = [
+                                [endX, endY],
+                                [endX - arrowSize * Math.cos(angle - Math.PI / 6), endY - arrowSize * Math.sin(angle - Math.PI / 6)],
+                                [endX - arrowSize * Math.cos(angle + Math.PI / 6), endY - arrowSize * Math.sin(angle + Math.PI / 6)]
+                            ];
+                            const polygon = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
+                            polygon.setAttribute('points', arrowPoints.map(p => p.join(',')).join(' '));
+                            polygon.setAttribute('fill', '#3b82f6');
+                            polygon.setAttribute('stroke', '#3b82f6');
+                            polygon.setAttribute('stroke-width', '1');
+                            svg.appendChild(polygon);
+                        }
+                    });
+                }
+            });
+        }
+
+        // Modal Save Handler
+        document.getElementById('btnSaveNode').addEventListener('click', function () {
+            const id = document.getElementById('editNodeId').value;
+            const title = document.getElementById('editNodeTitle').value;
+            const content = document.getElementById('editNodeContent').value;
+
+            const node = storyNodes.find(n => n.id == id);
+            if (node) {
+                node.title = title;
+                node.content = content;
+
+                // Update DOM
+                const el = document.querySelector(`.story-node[data-id="${id}"]`);
+                if (el) {
+                    el.querySelector('strong').textContent = title;
+                    el.querySelector('.node-content-preview').textContent = content;
+                }
+
+                // Close modal
+                const modal = bootstrap.Modal.getInstance(document.getElementById('editNodeModal'));
+                modal.hide();
+            }
+        });
+
+        // Modal Delete Handler
+        document.getElementById('btnDeleteNode').addEventListener('click', function () {
+            if (!confirm('Are you sure you want to delete this node?')) return;
+
+            const id = document.getElementById('editNodeId').value;
+
+            // Remove from array
+            storyNodes = storyNodes.filter(n => n.id != id);
+
+            // Remove connections TO this node
+            storyNodes.forEach(n => {
+                if (n.connections) {
+                    n.connections = n.connections.filter(cId => cId != id);
+                }
+            });
+
+            // Remove from DOM
+            const el = document.querySelector(`.story-node[data-id="${id}"]`);
+            if (el) el.remove();
+
+            updateConnections();
+
+            const modal = bootstrap.Modal.getInstance(document.getElementById('editNodeModal'));
+            modal.hide();
+        });
+
+        // Save Function
+        async function saveStoryState(silent = false) {
+            const payload = {
+                project_id: window.projectId,
+                email: window.userEmail,
+                nodes: storyNodes.map(n => ({
+                    dom_id: n.id, // Current internal ID (which connects rely on) -> saved as dom_id
+                    title: n.title,
+                    content: n.content,
+                    x: n.x,
+                    y: n.y,
+                    connections: n.connections
+                }))
+            };
+
+            try {
+                const response = await fetch('../php/projects.php?action=saveStoryNodes&id=' + window.projectId, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                const data = await response.json();
+
+                if (data.success) {
+                    if (!silent) alert('Story saved successfully!');
+                    return true;
+                } else {
+                    if (!silent) alert('Save failed: ' + data.message);
+                    return false;
+                }
+            } catch (error) {
+                console.error('Error saving story:', error);
+                if (!silent) alert('Error saving story nodes');
+                return false;
+            }
+        }
+
+        // Consolidated Save Project Function
+        async function saveProject() {
+            // Save both character and story
+            const charSaved = await saveCharacterState(true);
+            const storySaved = await saveStoryState(true);
+
+            if (charSaved && storySaved) {
+                alert('Project saved successfully!');
+            } else {
+                alert('Project saved with some errors. Please check console.');
+            }
+        }
+
+        // Global Save Project Button
+        document.querySelector('.btn-save').addEventListener('click', saveProject);
+
+        // Toolbar Save Button (Story only or full? Let's keep toolbar specific to story for context, but maybe full is better? Let's keep it story for now as it's in the story block)
+        document.getElementById('btnSaveStoryToolbar').addEventListener('click', () => saveStoryState(false));
+
+        function renderSavedCharacters(characters, assets) {
+            const container = document.getElementById('saved-characters-container');
+            container.innerHTML = '';
+
+            if (!characters || characters.length === 0) {
+                container.innerHTML = '<div class="text-muted fst-italic p-2">No characters saved yet.</div>';
+                return;
+            }
+
+            characters.forEach(char => {
+                // Find asset for image
+                let imageSrc = 'https://placehold.co/100x100/333/fff?text=No+Img';
+                if (char.image_id) {
+                    const asset = assets.find(a => a.id == char.image_id);
+                    if (asset) imageSrc = '../' + asset.file_path;
+                }
+
+                const card = document.createElement('div');
+                card.className = 'card border-0 flex-shrink-0';
+                card.style.cssText = 'width: 320px; background-color: #1e2029; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.3);';
+
+                // Colors for bars matching screenshot
+                const hpColor = '#ef4444'; // Red
+                const atkColor = '#f59e0b'; // Yellow/Orange
+                const spdColor = '#06b6d4'; // Cyan
+
+                card.innerHTML = `
+                    <div class="card-body p-3">
+                        <div class="d-flex gap-3 mb-3">
+                            <div style="width: 60px; height: 60px; border-radius: 8px; overflow: hidden; flex-shrink: 0; background-color: #333;">
+                                <img src="${imageSrc}" style="width: 100%; height: 100%; object-fit: cover;">
+                            </div>
+                            <div class="overflow-hidden">
+                                <h5 class="card-title text-white mb-0 text-truncate" title="${char.name}">${char.name}</h5>
+                                <small class="text-secondary">Level 1</small>
+                            </div>
+                        </div>
+                        
+                        <div class="d-flex flex-column gap-2">
+                            <div>
+                                <div class="d-flex justify-content-between text-secondary" style="font-size: 0.8rem; font-family: monospace;">
+                                    <span>HP</span>
+                                    <span class="text-white">${char.hp}</span>
+                                </div>
+                                <div class="progress" style="height: 6px; background-color: #2b2d36;">
+                                    <div class="progress-bar" role="progressbar" style="width: ${(char.hp / 200) * 100}%; background-color: ${hpColor};" aria-valuenow="${char.hp}" aria-valuemin="0" aria-valuemax="200"></div>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <div class="d-flex justify-content-between text-secondary" style="font-size: 0.8rem; font-family: monospace;">
+                                    <span>Attack</span>
+                                    <span class="text-white">${char.attack}</span>
+                                </div>
+                                <div class="progress" style="height: 6px; background-color: #2b2d36;">
+                                    <div class="progress-bar" role="progressbar" style="width: ${(char.attack / 100) * 100}%; background-color: ${atkColor};" aria-valuenow="${char.attack}" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+
+                            <div>
+                                <div class="d-flex justify-content-between text-secondary" style="font-size: 0.8rem; font-family: monospace;">
+                                    <span>Speed</span>
+                                    <span class="text-white">${char.speed}</span>
+                                </div>
+                                <div class="progress" style="height: 6px; background-color: #2b2d36;">
+                                    <div class="progress-bar" role="progressbar" style="width: ${(char.speed / 100) * 100}%; background-color: ${spdColor};" aria-valuenow="${char.speed}" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                // Make Card Clickable
+                card.style.cursor = 'pointer';
+                card.onclick = () => openEditCharacterModal(char, assets);
+
+                container.appendChild(card);
+            });
+        }
+
+        // Edit Character Modal Functions
+        function openEditCharacterModal(char, assets) {
+            const modal = new bootstrap.Modal(document.getElementById('editCharacterModal'));
+
+            // Populate Fields
+            document.getElementById('editCharId').value = char.id;
+            document.getElementById('editCharName').value = char.name;
+            document.getElementById('editCharHp').value = char.hp;
+            document.getElementById('editCharAtk').value = char.attack;
+            document.getElementById('editCharSpd').value = char.speed;
+
+            // Update Span Values
+            document.getElementById('editCharHpVal').textContent = char.hp;
+            document.getElementById('editCharAtkVal').textContent = char.attack;
+            document.getElementById('editCharSpdVal').textContent = char.speed;
+
+            // Image Select
+            const imgSelect = document.getElementById('editCharImage');
+            imgSelect.innerHTML = '';
+            // Add default option if needed or reuse existing assets
+            // Let's clone options from the main select or rebuild
+            // Rebuild is safer
+            if (assets && assets.length > 0) {
+                assets.forEach(asset => {
+                    const opt = document.createElement('option');
+                    opt.value = asset.id;
+                    opt.textContent = asset.original_name || asset.file_path; // Simple name
+                    if (asset.id == char.image_id) opt.selected = true;
+                    imgSelect.appendChild(opt);
+                });
+            } else {
+                imgSelect.innerHTML = '<option value="">No assets</option>';
+            }
+
+            // Listeners for sliders in modal
+            ['Hp', 'Atk', 'Spd'].forEach(stat => {
+                const slider = document.getElementById('editChar' + stat);
+                const val = document.getElementById('editChar' + stat + 'Val');
+                slider.oninput = () => val.textContent = slider.value;
+            });
+
+            modal.show();
+            updateEditCharPreview(assets);
+        }
+
+        // Helper to update preview
+        // Listener moved to setupModalListeners
+
+
+        // Helper to update preview
+        function updateEditCharPreview(assets) {
+            const safeAssets = assets || window.projectAssets;
+            const imgId = document.getElementById('editCharImage').value;
+            const imgPreview = document.getElementById('editCharPreview');
+            let src = 'https://placehold.co/100x100/333/fff?text=No+Img';
+
+            if (imgId && assets) {
+                const asset = assets.find(a => a.id == imgId);
+                if (asset) src = '../' + asset.file_path;
+            }
+            imgPreview.src = src;
+        }
+
+        // Listen for image change in modal
+        // We need to pass 'assets' to this listener, but assets is local to openEditCharacterModal or loadProjectData.
+        // Simplest way: store assets temporarily or re-fetch (inefficient).
+        // Check if we can access 'window.currentProjectAssets'? Or just attach listener inside openEditCharacterModal?
+        // Attaching inside openEditCharacterModal is risky if we add multiple listeners.
+        // Let's make 'currentAssets' a global var or similar.
+        // Or better: In loadProjectData, assign p.assets to a window var.
+
+        // ... changing approach slightly:
+        // loadProjectData already loaded assets. Let's make a global 'window.projectAssets'
+
+
+        // Event listeners moved to setupModalListeners() called on load
+
+
+
+        // Function to load project data
+        async function loadProjectData() {
+            try {
+                console.log('Loading project data for ID:', window.projectId);
+
+                const response = await fetch(`../php/projects.php?action=getProjectById&id=${window.projectId}`);
+                const data = await response.json();
+
+                console.log('Project load response:', data);
+
+                if (data.success && data.project) {
+                    const p = data.project;
+
+                    // Update header
+                    window.projectAssets = p.assets || []; // Store globally for modal access
+                    document.getElementById('projectTitle').textContent = p.title || 'Untitled Project';
+                    document.getElementById('projectDescription').textContent = p.description || 'Manage your game assets, story, and mechanics all in one place.';
+                    document.title = `${p.title} - BOLOBOX`;
+
+                    // Load Assets
+                    const gallery = document.querySelector('.asset-gallery');
+                    gallery.innerHTML = ''; // Clear default
+                    const imageSelect = document.getElementById('selectImage');
+                    imageSelect.innerHTML = ''; // Clear default
+
+                    if (p.assets && p.assets.length > 0) {
+                        p.assets.forEach(asset => {
+                            addAssetToGallery(asset);
+                            addAssetToDropdown(asset);
+                        });
+                    } else {
+                        gallery.innerHTML = '<p class="text-muted p-3">No assets uploaded yet.</p>';
+                    }
+
+                    // Load Character (Take the first one for now as we only have 1 form)
+                    if (p.characters && p.characters.length > 0) {
+                        const char = p.characters[0];
+                        document.getElementById('characterName').value = char.name;
+                        hpSlider.value = char.hp; hpValue.textContent = char.hp;
+                        attackSlider.value = char.attack; attackValue.textContent = char.attack;
+                        speedSlider.value = char.speed; speedValue.textContent = char.speed;
+                        if (char.image_id) imageSelect.value = char.image_id;
+                    }
+
+                    // Render Saved Characters
+                    renderSavedCharacters(p.characters, p.assets);
+
+                    // Load Story Nodes
+                    const canvas = document.querySelector('#story-zoom-container');
+                    // Remove default nodes (keep svg)
+                    const svg = canvas.querySelector('svg');
+                    canvas.innerHTML = '';
+                    canvas.appendChild(svg);
+                    storyNodes = [];
+
+                    if (p.story_nodes && p.story_nodes.length > 0) {
+                        p.story_nodes.forEach(node => {
+                            // Parse connections if string
+                            let conns = node.connections;
+                            if (typeof conns === 'string') {
+                                try { conns = JSON.parse(conns); } catch (e) { conns = []; }
+                            }
+
+                            // Use dom_id if available, otherwise fall back to DB ID (legacy nodes)
+                            // Crucial: Connections Array uses these IDs!
+                            const stableId = node.dom_id || ('db_' + node.id);
+
+                            // Track in state
+                            storyNodes.push({
+                                id: stableId,
+                                title: node.title,
+                                content: node.content,
+                                x: node.position_x,
+                                y: node.position_y,
+                                connections: conns || []
+                            });
+
+                            // Render
+                            const nodeEl = document.createElement('div');
+                            nodeEl.className = 'story-node';
+                            nodeEl.style.left = node.position_x + 'px';
+                            nodeEl.style.top = node.position_y + 'px';
+                            nodeEl.dataset.id = stableId;
+                            nodeEl.innerHTML = `
+                                <strong>${node.title}</strong>
+                                <div style="font-size: 0.8rem;">${node.content}</div>
+                            `;
+                            canvas.appendChild(nodeEl);
+                            makeNodeInteractive(nodeEl);
+                        });
+                        updateConnections();
+                    } else {
+                        // Add default start node if empty
+                        createNode('Start', 'Begin here', 100, 200, 'node_start', []);
+                    }
+
+                } else {
+                    console.error('Error loading project:', data.message);
+                    alert('Project not found or you do not have permission to access this project.');
+                    window.location.href = '../index.html';
+                }
+            } catch (error) {
+                console.error('Error loading project:', error);
+                alert('Error loading project: ' + error.message);
+                window.location.href = '../index.html';
+            }
+        }
+
+        // --- Initialization & Auth ---
+        async function checkLoginStatus() {
+            try {
+                // Check LocalStorage first
+                const userSession = localStorage.getItem('userSession');
+                let user = null;
+                if (userSession) {
+                    try { user = JSON.parse(userSession); } catch (e) { }
+                }
+
+                // Verify with server if needed or just trust LS for speed then verify?
+                // Let's do server check to be safe and get fresh data
+                const response = await fetch('../php/auth.php?action=check_login');
+                const data = await response.json();
+
+                if (data.success && data.logged_in) {
+                    window.userEmail = data.user.email;
+
+                    // Get Project ID
+                    const urlParams = new URLSearchParams(window.location.search);
+                    const pid = urlParams.get('id');
+                    if (!pid) {
+                        alert('No project specified');
+                        window.location.href = '../index.html';
+                        return;
+                    }
+                    window.projectId = pid;
+
+                    // Load Data
+                    loadProjectData();
+                } else {
+                    window.location.href = '../login.html';
+                }
+            } catch (e) {
+                console.error(e);
+                window.location.href = '../login.html';
+            }
+        }
+
+        function setupModalListeners() {
+            // Save Edit Character
+            const btnSave = document.getElementById('btnSaveCharChanges');
+            if (btnSave) {
+                btnSave.replaceWith(btnSave.cloneNode(true)); // remove old listeners if any
+                document.getElementById('btnSaveCharChanges').addEventListener('click', async function () {
+                    const id = document.getElementById('editCharId').value;
+                    const name = document.getElementById('editCharName').value;
+                    const imageId = document.getElementById('editCharImage').value;
+                    const hp = document.getElementById('editCharHp').value;
+                    const atk = document.getElementById('editCharAtk').value;
+                    const spd = document.getElementById('editCharSpd').value;
+
+                    const formData = new FormData();
+                    formData.append('action', 'saveCharacter');
+                    formData.append('project_id', window.projectId);
+                    formData.append('email', window.userEmail);
+                    formData.append('character_id', id);
+                    formData.append('name', name);
+                    formData.append('hp', hp);
+                    formData.append('attack', atk);
+                    formData.append('speed', spd);
+                    formData.append('image_id', imageId);
+
+                    try {
+                        const response = await fetch('../php/projects.php', { method: 'POST', body: formData });
+                        const data = await response.json();
+
+                        if (data.success) {
+                            alert('Character updated!');
+                            bootstrap.Modal.getInstance(document.getElementById('editCharacterModal')).hide();
+                            loadProjectData();
+                        } else {
+                            alert('Update failed: ' + data.message);
+                        }
+                    } catch (error) {
+                        console.error(error);
+                        alert('Error updating character');
+                    }
+                });
+            }
+
+            // Delete Character
+            const btnDelete = document.getElementById('btnDeleteChar');
+            if (btnDelete) {
+                btnDelete.replaceWith(btnDelete.cloneNode(true));
+                document.getElementById('btnDeleteChar').addEventListener('click', async function () {
+                    if (!confirm("Are you sure you want to delete this character?")) return;
+                    const charId = document.getElementById('editCharId').value;
+                    const formData = new FormData();
+                    formData.append('action', 'deleteCharacter');
+                    formData.append('project_id', window.projectId);
+                    formData.append('email', window.userEmail);
+                    formData.append('character_id', charId);
+
+                    try {
+                        const response = await fetch('../php/projects.php', { method: 'POST', body: formData });
+                        const data = await response.json();
+
+                        if (data.success) {
+                            alert('Character deleted!');
+                            bootstrap.Modal.getInstance(document.getElementById('editCharacterModal')).hide();
+                            loadProjectData();
+                        } else {
+                            alert('Delete failed: ' + data.message);
+                        }
+                    } catch (error) {
+                        console.error(error);
+                        alert('Error deleting character');
+                    }
+                });
+            }
+
+            // Update preview on selection change
+            const imgSelect = document.getElementById('editCharImage');
+            if (imgSelect) {
+                imgSelect.replaceWith(imgSelect.cloneNode(true));
+                document.getElementById('editCharImage').addEventListener('change', () => updateEditCharPreview());
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            checkLoginStatus();
+            setupModalListeners();
         });
     </script>
+
+    <!-- Edit Character Modal -->
+    <div class="modal fade" id="editCharacterModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content" style="background-color: #2b2d36; color: white;">
+                <div class="modal-header border-bottom border-secondary">
+                    <h5 class="modal-title">Edit Character</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="editCharId">
+                    <div class="mb-3">
+                        <label class="form-label text-secondary">Name</label>
+                        <input type="text" class="form-control bg-dark text-white border-secondary" id="editCharName">
+                    </div>
+                    <div class="mb-3">
+                        <div class="d-flex align-items-center gap-3 mb-2">
+                            <div
+                                style="width: 80px; height: 80px; border-radius: 8px; overflow: hidden; background-color: #333; flex-shrink: 0;">
+                                <img id="editCharPreview" src="" style="width: 100%; height: 100%; object-fit: cover;">
+                            </div>
+                            <div class="flex-grow-1">
+                                <label class="form-label text-secondary">Image</label>
+                                <select class="form-select bg-dark text-white border-secondary"
+                                    id="editCharImage"></select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label text-secondary">HP: <span id="editCharHpVal"></span></label>
+                        <input type="range" class="form-range" id="editCharHp" min="1" max="200">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label text-secondary">Attack: <span id="editCharAtkVal"></span></label>
+                        <input type="range" class="form-range" id="editCharAtk" min="1" max="100">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label text-secondary">Speed: <span id="editCharSpdVal"></span></label>
+                        <input type="range" class="form-range" id="editCharSpd" min="1" max="100">
+                    </div>
+                </div>
+                <div class="modal-footer border-top border-secondary">
+                    <button type="button" class="btn btn-outline-danger me-auto" id="btnDeleteChar">Delete</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="btnSaveCharChanges">Save Changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- Export as PDF Feature ---
+        // --- Export as PDF Feature (Fixed) ---
+        // --- Export as PDF Feature (Hybrid: Visual Map + Text Script) ---
+        // --- Export as PDF Feature (Text Script Optimized with BFS) ---
+        function exportProjectToPDF() {
+            const projectTitle = document.getElementById('projectTitle').textContent;
+            const projectDescription = document.getElementById('projectDescription').textContent;
+
+            // 1. Sorting Algorithm: Breadth-First Search (BFS)
+            // Tujuannya agar node diurutkan berdasarkan "Level/Kedalaman" cerita
+            function getBFSSortedNodes(nodes) {
+                if (!nodes || nodes.length === 0) return [];
+
+                const nodeMap = new Map();
+                const inDegree = new Map();
+                
+                // Build Map & Hitung In-Degree (Jumlah panah masuk)
+                nodes.forEach(node => {
+                    nodeMap.set(node.id, node);
+                    if (!inDegree.has(node.id)) inDegree.set(node.id, 0);
+                });
+
+                nodes.forEach(node => {
+                    if (node.connections) {
+                        node.connections.forEach(targetId => {
+                            if (nodeMap.has(targetId)) {
+                                inDegree.set(targetId, (inDegree.get(targetId) || 0) + 1);
+                            }
+                        });
+                    }
+                });
+
+                // Cari Start Node (Node yang tidak punya parent / In-Degree 0)
+                // Atau cari node dengan ID khusus 'node_start' jika ada
+                let startNodes = nodes.filter(n => n.id === 'node_start');
+                if (startNodes.length === 0) {
+                    startNodes = nodes.filter(n => inDegree.get(n.id) === 0);
+                }
+                // Fallback: Jika circular (looping), ambil node pertama di array
+                if (startNodes.length === 0) {
+                    startNodes = [nodes[0]];
+                }
+
+                // Mulai BFS
+                const sorted = [];
+                const visited = new Set();
+                const queue = [];
+
+                // Masukkan start nodes ke antrian
+                startNodes.forEach(n => {
+                    if (!visited.has(n.id)) {
+                        visited.add(n.id);
+                        queue.push(n);
+                    }
+                });
+
+                while (queue.length > 0) {
+                    const current = queue.shift(); // Ambil paling depan (BFS behaviour)
+                    sorted.push(current);
+
+                    if (current.connections) {
+                        current.connections.forEach(targetId => {
+                            // Cek validitas & visited agar tidak infinite loop
+                            if (nodeMap.has(targetId) && !visited.has(targetId)) {
+                                visited.add(targetId);
+                                queue.push(nodeMap.get(targetId));
+                            }
+                        });
+                    }
+                }
+
+                // Handle Orphan Nodes (Node yang terputus/tidak nyambung)
+                // Tetap kita print di bagian paling bawah
+                nodes.forEach(node => {
+                    if (!visited.has(node.id)) {
+                        sorted.push(node);
+                    }
+                });
+
+                return sorted;
+            }
+
+            // Urutkan node sebelum di-render
+            const sortedStoryNodes = getBFSSortedNodes(storyNodes);
+
+
+            // --- PDF Generation Start ---
+            const pdfContent = document.createElement('div');
+            pdfContent.style.padding = '40px';
+            pdfContent.style.backgroundColor = 'white';
+            pdfContent.style.color = 'black';
+            pdfContent.style.fontFamily = 'Arial, sans-serif';
+            pdfContent.style.width = '800px'; // Lebar fix agar layout konsisten
+
+            // 1. Header Project
+            const header = document.createElement('div');
+            header.innerHTML = `
+                <div style="text-align: center; margin-bottom: 40px;">
+                    <h1 style="color: #333; margin-bottom: 10px; text-transform: uppercase;">${projectTitle}</h1>
+                    <p style="color: #666; font-size: 14px;">${projectDescription}</p>
+                    <div style="font-size: 12px; color: #999; margin-top: 10px;">Generated by ZeroDraft on ${new Date().toLocaleDateString()}</div>
+                </div>
+                <hr style="border: 1px solid #eee; margin-bottom: 30px;">
+            `;
+            pdfContent.appendChild(header);
+
+            // 2. Character Roster
+            const savedCharsContainer = document.getElementById('saved-characters-container');
+            if (savedCharsContainer && savedCharsContainer.children.length > 0 && !savedCharsContainer.querySelector('.text-muted')) {
+                const charsSection = document.createElement('div');
+                charsSection.style.marginBottom = '40px';
+                charsSection.style.pageBreakInside = 'avoid';
+                charsSection.innerHTML = '<h2 style="color: #2b2d36; border-bottom: 2px solid #3b82f6; padding-bottom: 10px; margin-bottom: 20px;">1. Character Roster</h2>';
+
+                const charsList = document.createElement('div');
+                charsList.style.display = 'grid';
+                charsList.style.gridTemplateColumns = '1fr 1fr';
+                charsList.style.gap = '20px';
+
+                Array.from(savedCharsContainer.children).forEach(card => {
+                    const charDiv = document.createElement('div');
+                    charDiv.style.display = 'flex';
+                    charDiv.style.gap = '15px';
+                    charDiv.style.backgroundColor = '#f8f9fa';
+                    charDiv.style.border = '1px solid #ddd';
+                    charDiv.style.padding = '15px';
+                    charDiv.style.borderRadius = '8px';
+                    
+                    const imgElement = card.querySelector('img');
+                    const titleEl = card.querySelector('.card-title');
+                    const charName = titleEl ? titleEl.textContent : 'Unknown';
+                    const progressBars = card.querySelectorAll('.progress-bar');
+                    const hp = progressBars[0] ? progressBars[0].getAttribute('aria-valuenow') : 'N/A';
+                    const attack = progressBars[1] ? progressBars[1].getAttribute('aria-valuenow') : 'N/A';
+                    const speed = progressBars[2] ? progressBars[2].getAttribute('aria-valuenow') : 'N/A';
+
+                    charDiv.innerHTML = `
+                        <div style="flex-shrink: 0;">
+                            <img src="${imgElement ? imgElement.src : ''}" style="width: 80px; height: 80px; border-radius: 8px; object-fit: cover; background: #ccc;">
+                        </div>
+                        <div style="flex-grow: 1; font-size: 12px;">
+                            <h4 style="color: #333; margin: 0 0 5px 0;">${charName}</h4>
+                            <div style="display: flex; justify-content: space-between; border-bottom: 1px solid #eee;"><span>HP:</span> <b>${hp}</b></div>
+                            <div style="display: flex; justify-content: space-between; border-bottom: 1px solid #eee;"><span>ATK:</span> <b>${attack}</b></div>
+                            <div style="display: flex; justify-content: space-between;"><span>SPD:</span> <b>${speed}</b></div>
+                        </div>
+                    `;
+                    charsList.appendChild(charDiv);
+                });
+                charsSection.appendChild(charsList);
+                pdfContent.appendChild(charsSection);
+            }
+
+            // 3. Story Script (FULL TEXT)
+            if (sortedStoryNodes && sortedStoryNodes.length > 0) {
+                const scriptSection = document.createElement('div');
+                // Page break before script starts
+                scriptSection.innerHTML = '<h2 style="color: #2b2d36; border-bottom: 2px solid #3b82f6; padding-bottom: 10px; margin-bottom: 20px; page-break-before: always;">2. Story Script</h2>';
+                
+                const scriptContainer = document.createElement('div');
+                scriptContainer.style.display = 'flex';
+                scriptContainer.style.flexDirection = 'column';
+                scriptContainer.style.gap = '15px';
+
+                sortedStoryNodes.forEach((node, index) => {
+                    const nodeItem = document.createElement('div');
+                    nodeItem.style.border = '1px solid #ddd';
+                    nodeItem.style.borderLeft = '5px solid #3b82f6';
+                    nodeItem.style.padding = '15px';
+                    nodeItem.style.backgroundColor = '#fff';
+                    nodeItem.style.borderRadius = '4px';
+                    nodeItem.style.pageBreakInside = 'avoid'; // Mencegah kotak terpotong di tengah
+
+                    // Choices Logic
+                    let connectionsHtml = '';
+                    if (node.connections && node.connections.length > 0) {
+                        connectionsHtml = `<div style="margin-top: 15px; padding-top: 10px; border-top: 1px dashed #eee;">
+                            <strong style="color: #666; font-size: 12px; text-transform: uppercase;">Next Choices:</strong>
+                            <ul style="margin: 5px 0 0 0; padding-left: 20px; color: #3b82f6; font-size: 14px;">`;
+                        
+                        node.connections.forEach(targetId => {
+                            // Find target in our sorted list (or original list)
+                            const target = storyNodes.find(n => n.id == targetId);
+                            const targetName = target ? target.title : 'Unknown Node';
+                            connectionsHtml += `<li>Go to: <b>${targetName}</b></li>`;
+                        });
+                        connectionsHtml += `</ul></div>`;
+                    } else {
+                        connectionsHtml = `<div style="margin-top: 10px; color: #ef4444; font-size: 12px; font-weight: bold;">[ ENDING ]</div>`;
+                    }
+
+                    nodeItem.innerHTML = `
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                            <h3 style="margin: 0; color: #333; font-size: 18px;">${node.title}</h3>
+                            <span style="background: #eee; padding: 2px 8px; border-radius: 4px; font-size: 10px; color: #666;">Step ${index + 1}</span>
+                        </div>
+                        <div style="color: #444; line-height: 1.6; white-space: pre-wrap;">${node.content}</div>
+                        ${connectionsHtml}
+                    `;
+                    scriptContainer.appendChild(nodeItem);
+                });
+
+                scriptSection.appendChild(scriptContainer);
+                pdfContent.appendChild(scriptSection);
+            }
+
+            // Add footer
+            const footer = document.createElement('div');
+            footer.style.marginTop = '30px';
+            footer.style.paddingTop = '20px';
+            footer.style.borderTop = '1px solid #ddd';
+            footer.style.textAlign = 'center';
+            footer.style.color = '#999';
+            footer.style.fontSize = '12px';
+            footer.innerHTML = `<p>Generated by ZeroDraft on ${new Date().toLocaleDateString()}</p>`;
+            pdfContent.appendChild(footer);
+
+            // Configure PDF options
+            const now = new Date();
+            const dateStr = `${String(now.getDate()).padStart(2, '0')}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getFullYear()).slice(-2)}`;
+            const safeTitleForFilename = projectTitle.replace(/[^a-zA-Z0-9]/g, '_');
+            const opt = {
+                margin: 10,
+                filename: `ZeroDraft_${safeTitleForFilename}_${dateStr}.pdf`,
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2, useCORS: true },
+                // Kembali ke Portrait agar enak dibaca seperti dokumen naskah
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' } 
+            };
+
+            // Generate PDF
+            html2pdf().set(opt).from(pdfContent).save();
+        }
+
+        // Export PDF Button Handler
+        document.querySelector('.btn-export').addEventListener('click', exportProjectToPDF);
+    </script>
+
+    <style>
+        .btn-delete-asset {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: rgba(239, 68, 68, 0.9);
+            border: none;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.2s, background 0.2s;
+            z-index: 10;
+            font-size: 14px;
+        }
+
+        .asset-item:hover .btn-delete-asset {
+            opacity: 1;
+        }
+
+        .btn-delete-asset:hover {
+            background: rgba(220, 38, 38, 1);
+            transform: scale(1.1);
+        }
+
+        .asset-item {
+            position: relative;
+        }
+    </style>
 </body>
+
 </html>
