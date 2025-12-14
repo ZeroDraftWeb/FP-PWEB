@@ -47,7 +47,7 @@ flowchart TB
 
 ```mermaid
 flowchart LR
-    subgraph Root["📂 FP/"]
+    subgraph Root["📂 FP-PWEB/"]
         direction TB
         INDEX["index.html<br/>Landing & Dashboard"]
         NAV["nav.html<br/>Navigation Component"]
